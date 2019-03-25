@@ -7,9 +7,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="css/create-account.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body>
+  <div class="form-group col-md-6 d-flex flex-column align-items-center">
+    <label class="mt-4" for="formGroupExampleInput">Criar conta com</label>
+    <div>
+    <button type="button" class="btn btn-fb"><i class="fab fa-facebook-f pr-1"></i> Facebook</button>
+    <button type="button" class="btn btn-gplus"><i class="fab fa-google-plus-g pr-1"></i> Google</button>
+    </div>
+  </div>
+
+
   <form>
     <div class="form-group col-md-6">
       <label for="formGroupExampleInput">Login</label>
@@ -64,6 +73,9 @@
           <input type="text" class="form-control" id="" placeholder="Usuário" aria-describedby="inputGroupPrepend2" required>
         </div>
       </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <input class="btn btn-primary mt-3" type="submit" value="CRIAR CONTA">
     </div>
   </form>
 
