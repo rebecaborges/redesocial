@@ -1,0 +1,8 @@
+body{
+  margin: 0;
+}
+.form-group{
+  align-items: center;
+
+  width:50%;
+}
