@@ -1,13 +1,16 @@
 $(document).ready(function(){
-  $("#signButton").click(function(){
-    let email = $("#signEmail")
-    let password = $("#signEmail")
+  $("#signInButton").click(function(event){
+    let email = $("#signInEmail").val()
+    let password = $("#signInPassword").val()
+    event.preventDefault();
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
+    firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
+     window.location= "timeline.html";
+    })
+
+    .catch(function(error){
       var errorCode = error.code;
       var errorMessage = error.message;
-      // ...
     });
   })
 })
