@@ -1,9 +1,13 @@
-const config = {
-    apiKey: "AIzaSyCK2okvnD6hv9H92LUd__YRLL0duvEWK9I",
-    authDomain: "redesocial-96ddc.firebaseapp.com",
-    databaseURL: "https://redesocial-96ddc.firebaseio.com",
-    projectId: "redesocial-96ddc",
-    storageBucket: "redesocial-96ddc.appspot.com",
-    messagingSenderId: "242338541780"
-  };
-  firebase.initializeApp(config);
+$(document).ready(function(){
+  $("#signButton").click(function(){
+    let email = $("#signEmail")
+    let password = $("#signEmail")
+
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+    });
+  })
+})
