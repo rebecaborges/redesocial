@@ -5,7 +5,7 @@ $(document).ready(function(){
     event.preventDefault();
 
     firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
-     window.location= "timeline.html";
+     window.location= "form-perfil.html";
     })
 
     .catch(function(error){
