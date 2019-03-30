@@ -14,3 +14,7 @@ $(document).ready(function(){
     });
   })
 })
+
+$("#signUpButton").click(function(){
+  window.location = "create-account.html"
+})

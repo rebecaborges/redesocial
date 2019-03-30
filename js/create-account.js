@@ -39,7 +39,8 @@ function signUpGoogle () {
   });
 };
 
-function signUpFacebook (){
+function signUpFacebook (e){
+  e.preventDefault();
   var provider = new firebase.auth.FacebookAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
     var token = result.credential.accessToken;
@@ -47,13 +48,10 @@ function signUpFacebook (){
     window.location= "form-perfil.html";
 
   }).catch(function(error) {
+    console.log(error )
     var errorCode = error.code;
     var errorMessage = error.message;
     var email = error.email;
     var credential = error.credential;
   });
 }
-
-
-
-
