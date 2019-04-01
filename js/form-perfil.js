@@ -1,7 +1,23 @@
-function writeUserData(userId, name, email, imageUrl) {
-  firebase.database().ref('users/' + userId).set({
-    username: name,
-    email: email,
-    profile_picture : imageUrl
+$(document).ready(function(){
+ $('#saveProfileBtn').click(function(event){
+    event.preventDefault()
+    firebase.database().ref("users/profile").push({
+    name: $('#name').val(),
+    surname: $('#surname').val(),
+    profession: $('#profession').val(),
+    city: $('#city').val(),
+    state: $('#state').val(),
+    birthDate: $('#birthDate').val(),
+    userName: $('#userName').val()  
   });
-}
+ });
+})
+
+
+
+
+
+
+
+
+
