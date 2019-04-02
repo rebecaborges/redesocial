@@ -10,9 +10,9 @@ $("#sendPost").click(function(event){
   const post = $("#post").val();
   const postText = $(".show-post")
 
-  
   postText.prepend(`<ul><li>${post}</li></ul>`)
   $("#post").val('');
   
+  firebase.database().ref("users/posts").push(post)
 });
 
