@@ -1,4 +1,4 @@
-var text = $('#post');
+const text = $('#post');
 text.on('change drop keydown cut paste', function() {
   text.height('auto');
 	text.height(text.prop('scrollHeight'));
@@ -13,6 +13,8 @@ $("#sendPost").click(function(event){
   
   postText.prepend(`<ul><li>${post}</li></ul>`)
   $("#post").val('');
+  firebase.database().ref("users/posts").push(post)
   
 });
+
 
