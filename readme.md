@@ -8,11 +8,12 @@
 
 #### Personas:
 
-* Usuária:
-* Usuária:
+![Barbara](Barbara.png)
+
+![Maria](Maria.png)
 
 #### Protótipo:
 
-* Fidelidade:
+* Baixa fidelidade: (https://marvelapp.com/b6ehdcb/screen/54727805)
 
 #### História de usuário:
