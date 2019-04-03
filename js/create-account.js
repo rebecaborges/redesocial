@@ -13,8 +13,9 @@ function signUp (event) {
   const password = $("#signUpPassword").val()
   event.preventDefault();
 
-  firebase.auth().createUserWithEmailAndPassword(email, password).then(function () {
-    window.location = "form-perfil.html";
+  firebase.auth().createUserWithEmailAndPassword(email, password).then(function (response) {
+
+    window.location = "form-perfil.html?id=" + response.user.uid;
   })
 
   .catch(function (error) {
@@ -41,17 +42,17 @@ function signUpGoogle () {
 
 function signUpFacebook (e){
   e.preventDefault();
-  var provider = new firebase.auth.FacebookAuthProvider();
+  const provider = new firebase.auth.FacebookAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
-    var token = result.credential.accessToken;
-    var user = result.user;
+    const token = result.credential.accessToken;
+    const user = result.user;
     window.location= "form-perfil.html";
 
   }).catch(function(error) {
     console.log(error )
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    var email = error.email;
-    var credential = error.credential;
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    const email = error.email;
+    const credential = error.credential;
   });
 }

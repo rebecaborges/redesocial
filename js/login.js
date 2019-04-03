@@ -4,13 +4,13 @@ $(document).ready(function(){
     let password = $("#signInPassword").val()
     event.preventDefault();
 
-    firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
+    firebase.auth().signInWithEmailAndPassword(email, password).then(function(response) {
      window.location= "timeline.html";
     })
 
     .catch(function(error){
-      let errorCode = error.code;
-      let errorMessage = error.message;
+      const errorCode = error.code;
+      const errorMessage = error.message;
     });
   })
 })
