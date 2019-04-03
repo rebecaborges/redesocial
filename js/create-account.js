@@ -15,7 +15,7 @@ function signUp (event) {
 
   firebase.auth().createUserWithEmailAndPassword(email, password).then(function (response) {
 
-    window.location = "form-perfil.html?id=" + response.user.uid;
+    window.location = "form-profile.html?id=" + response.user.uid;
   })
 
   .catch(function (error) {
@@ -30,9 +30,8 @@ function signUpGoogle () {
   firebase.auth().signInWithPopup(provider).then(function (result) {
     const token = result.credential.accessToken;
     const user = result.user;
-    window.location = "form-perfil.html";
-
-  }).catch(function (error) {
+    
+    }).catch(function (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
     const email = error.email;
@@ -46,7 +45,7 @@ function signUpFacebook (e){
   firebase.auth().signInWithPopup(provider).then(function(result) {
     const token = result.credential.accessToken;
     const user = result.user;
-    window.location= "form-perfil.html";
+    window.location= "form-profile.html";
 
   }).catch(function(error) {
     console.log(error )
