@@ -13,7 +13,7 @@ function signUp (event) {
   createUser(email, password)
 }
 
-function createUser(){
+function createUser(email, password){
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(function (response) {
       const userId = response.user.uid;
@@ -47,6 +47,8 @@ function signInWithPopup(provider) {
     const errorMessage = error.message;
     const email = error.email;
     const credential = error.credential;
+
+    alert(errorCode, errorMessage, email, credential)
   });
 }
 

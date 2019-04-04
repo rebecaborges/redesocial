@@ -23,6 +23,7 @@ function signInEmail(){
   .catch(function(error){
       const errorCode = error.code;
       const errorMessage = error.message;
+      alert(errorCode, errorMessage)
     });
   }
 
@@ -39,5 +40,6 @@ function signInGoogle(){
     const errorMessage = error.message;
     const email = error.email;
     const credential = error.credential;
+    alert(errorCode, errorMessage, email, credential)
   });
 }
