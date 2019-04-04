@@ -1,22 +1,45 @@
+const database = firebase.database();
+
+$(document).ready(function () {
+
+  $("#sendPost").click(showPosts);
+  $("#sendPost").click(storePost);
+
+  });
+
+
 const text = $('#post');
 text.on('change drop keydown cut paste', function() {
   text.height('auto');
 	text.height(text.prop('scrollHeight'));
 });
 
-
-$("#sendPost").click(function(event){
+function getName(){
   const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-  event.preventDefault()
-  const post = $("#post").val();
-  const postText = $(".show-post")
+  database.ref("profile/"+USER_ID).once('value').then(function(snapshot) {
+  return snapshot.val().name;
+  });      
 
-  postText.prepend(`<ul><li>${post}</li></ul>`)
-  $("#post").val('');
-  firebase.database().ref("posts/"+ USER_ID).push({
-    posts: post
-  })
+  
+};
 
-});
+function getPost(){
+  return $("#post").val();
+};
+
+function storePost(){
+  const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
+  const createPost = firebase.database().ref("posts/"+ USER_ID).push({
+  posts: getPost()
+  });
+  return createPost;
+};
+
+function showPosts(){
+$(".show-post").prepend(
+  `<p>${getName()}</p>
+  <article>${getPost()}</article>
+  <div></div>
+`)};
 
 
