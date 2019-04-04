@@ -1,51 +1,45 @@
 $(document).ready(function () {
-
   $("#signUpButton").click(signUp);
-
   $("#signUpButtonGoogle").click(signUpGoogle);
-
   $("#signUpButtonFacebook").click(signUpFacebook);
-
 });
 
 function signUp (event) {
-  const email = $("#signUpEmail").val()
-  const password = $("#signUpPassword").val()
   event.preventDefault();
 
-  firebase.auth().createUserWithEmailAndPassword(email, password).then(function (response) {
-
-    window.location = "form-profile.html?id=" + response.user.uid;
-  })
-
-  .catch(function (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
+  const email = $("#signUpEmail").val()
+  const password = $("#signUpPassword").val()
   
+  createUser(email, password)
+}
+
+function createUser(){
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(function (response) {
+      const userId = response.user.uid;
+      redirectToFormProfile(userId)
+    })
+    .catch(function(error) {
+    handleErrors(error)
+  });
 }
 
 function signUpGoogle () {
   const provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(function (result) {
-    const token = result.credential.accessToken;
-    const user = result.user;
-    
-    }).catch(function (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    const email = error.email;
-    const credential = error.credential;
-  });
+  signInWithPopup(provider)
 };
 
-function signUpFacebook (e){
-  e.preventDefault();
+function signUpFacebook () {
   const provider = new firebase.auth.FacebookAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-    const token = result.credential.accessToken;
-    const user = result.user;
-    window.location= "form-profile.html";
+  signInWithPopup(provider)
+  
+}
+
+function signInWithPopup(provider) {
+  firebase.auth().signInWithPopup(provider).then(function(response) {
+    const token = response.credential.accessToken;
+    const userId = response.user;
+    redirectToFormProfile(userId)
 
   }).catch(function(error) {
     console.log(error )
@@ -54,4 +48,14 @@ function signUpFacebook (e){
     const email = error.email;
     const credential = error.credential;
   });
+}
+
+
+function handleErrors(error){
+  const errorMessage = error.message;
+  alert(errorMessage)
+}
+
+function redirectToFormProfile(userId){
+  window.location = "form-profile.html?id=" + userId;
 }
