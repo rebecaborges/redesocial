@@ -1,9 +1,16 @@
 $(document).ready(function () {
   $('#saveProfileBtn').click(function (event) {
-    const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
+    const user = firebase.auth().currentUser
     event.preventDefault()
-    firebase.database().ref("profile/" + USER_ID).update({
-      name: $('#name').val(),
+
+    let name = $('#name').val()
+  
+  user.updateProfile({
+    displayName: name
+  })
+  console.log(user.displayName)
+
+    firebase.database().ref(`"profile/${user.uid}"`).update({
       surname: $('#surname').val(),
       profession: $('#profession').val(),
       city: $('#city').val(),
@@ -11,10 +18,21 @@ $(document).ready(function () {
       birthDate: $('#birthDate').val(),
       userName: $('#userName').val()
     }).then(function () {
-      window.location = "timeline.html?id=" + USER_ID;
+      window.location = `timeline.html?id=${user.uid}`;
     })
   });
 })
+
+// function updateProfile(){
+//   let name = $('#name').val()
+//   const user = firebase.auth().currentUser
+//   user.updateProfile({
+//     displayName: name
+//   })
+//   console.log(user.displayName)
+// }
+
+
 
 
 
