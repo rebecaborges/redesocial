@@ -1,7 +1,6 @@
 const database = firebase.database();
 const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 //Mudar esse USER_ID para o método da Carol que fica mais bonito, eu acho rs
-//Colocar mais coisas do document.ready com o click
 //Usar mais on que é o event listener do jquery
 //Função do auto resize da text area está desativada, pesquisar se tem no bootstrap
 //usar template string onde der pq é o certo
@@ -10,6 +9,11 @@ const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 //Não permitir posts em branco
 $(document).ready(() => {
     getDatabasePosts();
+    
+    $("#sendPost").on("click", () => {
+      storePostsOnDatabase();
+      getDatabasePosts();
+  })
 });
 
 function getDatabasePosts(){
@@ -32,12 +36,15 @@ function clear(){
     $("#textAreaPost").val("")
 }
 
+//Botão curtir e editar estão sem função
+
 function showDatabasePosts(childKey, childData){
     const user = firebase.auth().currentUser
     $("#postsSection").prepend(`
     <div>
       <p>${user.displayName}</p>
       <p>${childData}</p>
+      <button>Curtir</button>
       <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       <button data-edit="${childKey}">Editar</button>
     </div>`)
@@ -48,10 +55,7 @@ function removePosts(key){
     getDatabasePosts()
 }
 
-$("#sendPost").on("click", () => {
-    storePostsOnDatabase();
-    getDatabasePosts();
-})
+
 
 function storePostsOnDatabase(){
     const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
