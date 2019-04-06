@@ -4,11 +4,11 @@ const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 //Colocar mais coisas do document.ready com o click
 //Usar mais on que é o event listener do jquery
 //Função do auto resize da text area está desativada, pesquisar se tem no bootstrap
-//O nome não está sendo pego com display name
 //usar template string onde der pq é o certo
 //Usar for in onde der
 //Usar mais arrow functions
-$(document).ready(function() {
+//Não permitir posts em branco
+$(document).ready(() => {
     getDatabasePosts();
 });
 
@@ -21,7 +21,8 @@ function getDatabasePosts(){
         const childData = childSnapshot.val().posts;
        
         showDatabasePosts(childKey, childData)
-         document.getElementById(childKey).addEventListener("click", () => remove(childKey));
+        //Não consegui trocar esse getElementById, se alguém conseguir arruma, please
+         document.getElementById(childKey).addEventListener("click", () => removePosts(childKey));
     });
   });
 }
@@ -32,15 +33,17 @@ function clear(){
 }
 
 function showDatabasePosts(childKey, childData){
+    const user = firebase.auth().currentUser
     $("#postsSection").prepend(`
     <div>
+      <p>${user.displayName}</p>
+      <p>${childData}</p>
       <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       <button data-edit="${childKey}">Editar</button>
-      <p>${childData}</p>
     </div>`)
 }
 
-function remove(key){
+function removePosts(key){
     database.ref(`posts/${USER_ID}/${key}`).remove();
     getDatabasePosts()
 }
