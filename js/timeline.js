@@ -7,9 +7,11 @@ const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 //Usar for in onde der
 //Usar mais arrow functions
 //Não permitir posts em branco
+//Substituir os templates pelos seus respectivos ícones, lixeira, coração e caneta
+//Função editar dando pau, só funcionava na versão com bugs e acho que vai ter que mudar a lógica pra ela voltar a funcionar
 $(document).ready(() => {
     getDatabasePosts();
-    
+
     $("#sendPost").on("click", () => {
       storePostsOnDatabase();
       getDatabasePosts();
@@ -25,8 +27,7 @@ function getDatabasePosts(){
         const childData = childSnapshot.val().posts;
        
         showDatabasePosts(childKey, childData)
-        //Não consegui trocar esse getElementById, se alguém conseguir arruma, please
-         document.getElementById(childKey).addEventListener("click", () => removePosts(childKey));
+        $(`#${childKey}`).on("click", () => removePosts(childKey));
     });
   });
 }
@@ -54,6 +55,18 @@ function removePosts(key){
     database.ref(`posts/${USER_ID}/${key}`).remove();
     getDatabasePosts()
 }
+
+function editPosts(){
+    database.ref(`posts/${USER_ID}/${key}`).update();
+}
+
+//   $(`button[data-edit=${childKey}]`).click(function(){
+  //     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
+  //       $(this).attr("contentEditable", "false")
+  //     })
+  //   })
+  // })
+
 
 
 
