@@ -1,48 +1,56 @@
 const database = firebase.database();
 const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 //Mudar esse USER_ID para o método da Carol que fica mais bonito, eu acho rs
-
-//Quando a página é carregada os posts do banco são trazidos
 //Colocar mais coisas do document.ready com o click
-//Ou aquele que a Ju mostrou, event listener do jquery
-//Função da text area está desativado
+//Usar mais on que é o event listener do jquery
+//Função do auto resize da text area está desativada, pesquisar se tem no bootstrap
 //O nome não está sendo pego com display name
+//usar template string onde der pq é o certo
+//Usar for in onde der
+//Usar mais arrow functions
 $(document).ready(function() {
-  showDatabasePosts();
+    getDatabasePosts();
 });
 
-function showDatabasePosts(){
-    // FUNCAO QUE POSTA NA TELA O QUE ESTA NO BANCO
-    database.ref('posts/'+ USER_ID).once('value')
+function getDatabasePosts(){
+    database.ref(`posts/${USER_ID}`).once('value')
     .then(function(snapshot){
-      $("#postsSection").html("");
+      clear()
       snapshot.forEach(function(childSnapshot) {
         const childKey = childSnapshot.key;
         const childData = childSnapshot.val().posts;
-        $("#postsSection").prepend(`
-        <div>
-           <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
-           <button data-edit="${childKey}">Editar</button>
-           <p>${childData}</p>
-         </div>`)
- 
+       
+        showDatabasePosts(childKey, childData)
          document.getElementById(childKey).addEventListener("click", () => remove(childKey));
     });
   });
 }
 
- // FUNCAO QUE REMOVE POSTS DO BANCO (SOMENTE ISSO)
-function remove(key){
-  database.ref(`posts/${USER_ID}/${key}`).remove();
-  showDatabasePosts()
+function clear(){
+    $("#postsSection").html("");
+    $("#textAreaPost").val("")
 }
 
-document.getElementById("sendPost").addEventListener("click", () => {
-  gravaPostsNoBanco();
-  showDatabasePosts();
+function showDatabasePosts(childKey, childData){
+    $("#postsSection").prepend(`
+    <div>
+      <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
+      <button data-edit="${childKey}">Editar</button>
+      <p>${childData}</p>
+    </div>`)
+}
+
+function remove(key){
+    database.ref(`posts/${USER_ID}/${key}`).remove();
+    getDatabasePosts()
+}
+
+$("#sendPost").on("click", () => {
+    storePostsOnDatabase();
+    getDatabasePosts();
 })
 
-function gravaPostsNoBanco(){
+function storePostsOnDatabase(){
     const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
     firebase.database().ref(`posts/${USER_ID}`).push({
       posts: getPostFromTextarea()
@@ -50,21 +58,9 @@ function gravaPostsNoBanco(){
 }
 
 function getPostFromTextarea(){
-    return $("#post").val();
+    return $("#textAreaPost").val();
 };
  
-  // $("#sendPost").click(storePost);
-
-
-  // function storePost(){
-  //   const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-  //   const createPost = firebase.database().ref(`posts/${USER_ID}`).push({
-  //     posts: getPost()
-  //   });
-
-  //   return createPost;
-  // };
-
   // $("#sendPost").click(()=>{
   //   const user = firebase.auth().currentUser
 
