@@ -1,19 +1,25 @@
 const database = firebase.database();
 const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
+//Mudar esse USER_ID para o método da Carol que fica mais bonito, eu acho rs
 
+//Quando a página é carregada os posts do banco são trazidos
+//Colocar mais coisas do document.ready com o click
+//Ou aquele que a Ju mostrou, event listener do jquery
+//Função da text area está desativado
+//O nome não está sendo pego com display name
 $(document).ready(function() {
-  trazPostsDoBanco();
+  showDatabasePosts();
 });
 
-function trazPostsDoBanco(){
+function showDatabasePosts(){
     // FUNCAO QUE POSTA NA TELA O QUE ESTA NO BANCO
     database.ref('posts/'+ USER_ID).once('value')
     .then(function(snapshot){
-      $("#esthe").html("");
+      $("#postsSection").html("");
       snapshot.forEach(function(childSnapshot) {
-        let childKey = childSnapshot.key;
-        let childData = childSnapshot.val().posts;
-        $("#esthe").prepend(`
+        const childKey = childSnapshot.key;
+        const childData = childSnapshot.val().posts;
+        $("#postsSection").prepend(`
         <div>
            <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
            <button data-edit="${childKey}">Editar</button>
@@ -28,12 +34,12 @@ function trazPostsDoBanco(){
  // FUNCAO QUE REMOVE POSTS DO BANCO (SOMENTE ISSO)
 function remove(key){
   database.ref(`posts/${USER_ID}/${key}`).remove();
-  trazPostsDoBanco()
+  showDatabasePosts()
 }
 
 document.getElementById("sendPost").addEventListener("click", () => {
   gravaPostsNoBanco();
-  trazPostsDoBanco();
+  showDatabasePosts();
 })
 
 function gravaPostsNoBanco(){
