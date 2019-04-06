@@ -56,19 +56,23 @@ function removePosts(key){
     getDatabasePosts()
 }
 
+//Vai editar os posts na tela/in place
 function editPosts(){
+
+}
+
+//Vai atualizar os posts no banco de dados
+function updatePosts(){
     database.ref(`posts/${USER_ID}/${key}`).update();
 }
 
+//Função de editar da Paloma
 //   $(`button[data-edit=${childKey}]`).click(function(){
   //     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
   //       $(this).attr("contentEditable", "false")
   //     })
   //   })
   // })
-
-
-
 
 function storePostsOnDatabase(){
     const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
@@ -81,9 +85,6 @@ function getPostFromTextarea(){
     return $("#textAreaPost").val();
 };
  
-  // $("#sendPost").click(()=>{
-  //   const user = firebase.auth().currentUser
-
   // $(".show-post").prepend(`<div>
   //     <p>${user.displayName}</p>
   //     <button data-delete="${childKey}" class="delete">Deletar</button>
