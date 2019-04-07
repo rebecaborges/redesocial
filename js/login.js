@@ -10,10 +10,9 @@ $(document).ready(function(){
 
 })
 
-function signInEmail(){
-    // const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-    let email = $("#signInEmail").val()
-    let password = $("#signInPassword").val()
+function signInEmail(event){
+    const email = $("#signInEmail").val()
+    const password = $("#signInPassword").val()
     event.preventDefault();
 
     firebase.auth().signInWithEmailAndPassword(email, password).then(function(response) {''
