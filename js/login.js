@@ -1,6 +1,6 @@
-$(document).ready(function(){
+$(document).ready(()=>{
 
-  $("#signUpButton").click(function(){
+  $("#signUpButton").click(()=>{
     window.location = "create-account.html"
   })
 
@@ -44,4 +44,3 @@ function signInGoogle(){
 }
 
 //function signInFacebook(){}
-
