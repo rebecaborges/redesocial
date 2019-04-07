@@ -9,16 +9,18 @@ const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 //Não permitir posts em branco
 //Substituir os templates pelos seus respectivos ícones, lixeira, coração e caneta
 //Função editar dando pau, só funcionava na versão com bugs e acho que vai ter que mudar a lógica pra ela voltar a funcionar
-$(document).ready(() => {
-  getDatabasePostsPublic();
-  getDatabasePostsPrivate();
 
+//window.addEventListener("load", () =>{getDatabasePostsPrivate(), getDatabasePostsPublic()});
+$(document).ready(() => {
+  getDatabasePosts();
+  //getDatabasePostsPublic();
+})
   $("#sendPost").on("click", () => {
     if(document.querySelector("#select").selectedIndex === 1){
-      getDatabasePostsPublic();
+      storePostsOnDatabase(true);
 
     }else if (document.querySelector("#select").selectedIndex === 2){
-      getDatabasePostsPrivate();
+      storePostsOnDatabase(false);
     }
     
     document.querySelector("#select").selectedIndex = 0;
@@ -26,18 +28,14 @@ $(document).ready(() => {
 
   $(".change-select").on("change",() => {
     if(document.querySelector("#select").selectedIndex ===1){
-      changePublic();
+      storePostsOnDatabase();
     }else if(document.querySelector("#select").selectedIndex ===2){
       changePrivate();
     }
   })
 
-
-})
-
-
-function getDatabasePostsPublic() {
-  database.ref(`posts/public/${USER_ID}`).once('value')
+function getDatabasePosts() {
+  database.ref(`posts/${USER_ID}`).once('value')
     .then(function (snapshot) {
       clear()
       snapshot.forEach(function (childSnapshot) {
@@ -54,16 +52,15 @@ function getDatabasePostsPublic() {
     });
 }
 
-
 function getDatabasePostsPrivate() {
-  database.ref(`posts/private/${USER_ID}`).once('value')
+  database.ref(`posts/${USER_ID}/private`).once('value')
     .then(function (snapshot) {
       clear()
       snapshot.forEach(function (childSnapshot) {
         const childKey = childSnapshot.key;
-        console.log(childKey)
+        //console.log(childKey)
         const childData = childSnapshot.val().posts;
-        console.log(childData)
+        //console.log(childData)
 
         showDatabasePosts(childKey, childData)
         $(`#${childKey}`).on("click", () => removePostsPrivate(childKey)
@@ -94,25 +91,26 @@ function showDatabasePosts(childKey, childData) {
 
 function changePublic(){
   USER_ID
-  firebase.database().ref(`posts/public/${USER_ID}`).push({
+  firebase.database().ref(`posts/${USER_ID}/public`).push({
     posts: getPostFromTextarea()
   });
 }
-
+/*
 function changePrivate (){
   USER_ID
-  firebase.database().ref(`posts/private/${USER_ID}`).push({
+  firebase.database().ref(`posts/${USER_ID}/private`).push({
     posts: getPostFromTextarea()
   });
 }
+*/
 
-
-// function storePostsOnDatabase() {
-//   const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-//   firebase.database().ref(`posts/${USER_ID}`).push({
-//     posts: getPostFromTextarea()
-//   });
-// }
+function storePostsOnDatabase(boolean) {
+  const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
+  firebase.database().ref(`posts/${USER_ID}`).push({
+    posts: getPostFromTextarea(),
+    public: boolean
+  });
+}
 
 
 function clear() {
