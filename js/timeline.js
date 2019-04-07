@@ -10,38 +10,79 @@ const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 //Substituir os templates pelos seus respectivos ícones, lixeira, coração e caneta
 //Função editar dando pau, só funcionava na versão com bugs e acho que vai ter que mudar a lógica pra ela voltar a funcionar
 $(document).ready(() => {
-    getDatabasePosts();
+  getDatabasePostsPublic();
+  getDatabasePostsPrivate();
 
-    $("#sendPost").on("click", () => {
-      storePostsOnDatabase();
-      getDatabasePosts();
+  $("#sendPost").on("click", () => {
+    if(document.querySelector("#select").selectedIndex === 1){
+      getDatabasePostsPublic();
+
+    }else if (document.querySelector("#select").selectedIndex === 2){
+      getDatabasePostsPrivate();
+    }
+    
+    document.querySelector("#select").selectedIndex = 0;
   })
-});
 
-function getDatabasePosts(){
-    database.ref(`posts/${USER_ID}`).once('value')
-    .then(function(snapshot){
+  $(".change-select").on("change",() => {
+    if(document.querySelector("#select").selectedIndex ===1){
+      changePublic();
+    }else if(document.querySelector("#select").selectedIndex ===2){
+      changePrivate();
+    }
+  })
+
+
+})
+
+
+function getDatabasePostsPublic() {
+  database.ref(`posts/public/${USER_ID}`).once('value')
+    .then(function (snapshot) {
       clear()
-      snapshot.forEach(function(childSnapshot) {
+      snapshot.forEach(function (childSnapshot) {
         const childKey = childSnapshot.key;
+        console.log(childKey)
         const childData = childSnapshot.val().posts;
-       
+        console.log(childData)
+
         showDatabasePosts(childKey, childData)
-        $(`#${childKey}`).on("click", () => removePosts(childKey));
+        $(`#${childKey}`).on("click", () => removePostsPublic(childKey) 
+        
+        );
+      });
     });
-  });
 }
 
-function clear(){
-    $("#postsSection").html("");
-    $("#textAreaPost").val("")
+
+function getDatabasePostsPrivate() {
+  database.ref(`posts/private/${USER_ID}`).once('value')
+    .then(function (snapshot) {
+      clear()
+      snapshot.forEach(function (childSnapshot) {
+        const childKey = childSnapshot.key;
+        console.log(childKey)
+        const childData = childSnapshot.val().posts;
+        console.log(childData)
+
+        showDatabasePosts(childKey, childData)
+        $(`#${childKey}`).on("click", () => removePostsPrivate(childKey)
+        
+        );
+      });
+    });
 }
+
+function getPostFromTextarea() {
+  return $("#textAreaPost").val();
+};
 
 //Botão curtir e editar estão sem função
 
-function showDatabasePosts(childKey, childData){
-    const user = firebase.auth().currentUser
-    $("#postsSection").prepend(`
+function showDatabasePosts(childKey, childData) {
+  const user = firebase.auth().currentUser
+  $("#postsSection").prepend(`
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <div>
       <p>${user.displayName}</p>
       <p>${childData}</p>
@@ -51,40 +92,66 @@ function showDatabasePosts(childKey, childData){
     </div>`)
 }
 
-function removePosts(key){
-    database.ref(`posts/${USER_ID}/${key}`).remove();
-    getDatabasePosts()
+function changePublic(){
+  USER_ID
+  firebase.database().ref(`posts/public/${USER_ID}`).push({
+    posts: getPostFromTextarea()
+  });
 }
 
+function changePrivate (){
+  USER_ID
+  firebase.database().ref(`posts/private/${USER_ID}`).push({
+    posts: getPostFromTextarea()
+  });
+}
+
+
+// function storePostsOnDatabase() {
+//   const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
+//   firebase.database().ref(`posts/${USER_ID}`).push({
+//     posts: getPostFromTextarea()
+//   });
+// }
+
+
+function clear() {
+  $("#postsSection").html("");
+  $("#textAreaPost").val("")
+}
+
+function removePostsPublic(key) {
+  database.ref(`posts/public/${USER_ID}/${key}`).remove();
+  getDatabasePostsPublic();
+}
+
+function removePostsPrivate(key) {
+  database.ref(`posts/private/${USER_ID}/${key}`).remove();
+  getDatabasePostsPrivate();
+}
+
+
+
+
 //Vai editar os posts na tela/in place
-function editPosts(){
+function editPosts() {
 
 }
 
 //Vai atualizar os posts no banco de dados
-function updatePosts(){
-    database.ref(`posts/${USER_ID}/${key}`).update();
+function updatePosts() {
+  database.ref(`posts/${USER_ID}/${key}`).update();
 }
 
 //Função de editar da Paloma
 //   $(`button[data-edit=${childKey}]`).click(function(){
-  //     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
-  //       $(this).attr("contentEditable", "false")
-  //     })
-  //   })
-  // })
+//     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
+//       $(this).attr("contentEditable", "false")
+//     })
+//   })
+// })
 
-function storePostsOnDatabase(){
-    const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-    firebase.database().ref(`posts/${USER_ID}`).push({
-      posts: getPostFromTextarea()
-  });
-}
 
-function getPostFromTextarea(){
-    return $("#textAreaPost").val();
-};
- 
   // $(".show-post").prepend(`<div>
   //     <p>${user.displayName}</p>
   //     <button data-delete="${childKey}" class="delete">Deletar</button>
