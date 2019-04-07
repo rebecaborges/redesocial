@@ -16,7 +16,7 @@ function signInEmail(){
     let password = $("#signInPassword").val()
     event.preventDefault();
 
-    firebase.auth().signInWithEmailAndPassword(email, password).then(function(response) {
+    firebase.auth().signInWithEmailAndPassword(email, password).then(function(response) {''
     window.location= "timeline.html?id="+response.user.uid;
   })
 

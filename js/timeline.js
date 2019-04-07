@@ -1,42 +1,80 @@
 const database = firebase.database();
 const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
+//Mudar esse USER_ID para o método da Carol que fica mais bonito, eu acho rs
+//Usar mais on que é o event listener do jquery
+//Função do auto resize da text area está desativada, pesquisar se tem no bootstrap
+//usar template string onde der pq é o certo
+//Usar for in onde der
+//Usar mais arrow functions
+//Não permitir posts em branco
+//Substituir os templates pelos seus respectivos ícones, lixeira, coração e caneta
+//Função editar dando pau, só funcionava na versão com bugs e acho que vai ter que mudar a lógica pra ela voltar a funcionar
+$(document).ready(() => {
+    getDatabasePosts();
 
-$(document).ready(function() {
-  trazPostsDoBanco();
+    $("#sendPost").on("click", () => {
+      storePostsOnDatabase();
+      getDatabasePosts();
+  })
 });
 
-function trazPostsDoBanco(){
-    // FUNCAO QUE POSTA NA TELA O QUE ESTA NO BANCO
-    database.ref('posts/'+ USER_ID).once('value')
+function getDatabasePosts(){
+    database.ref(`posts/${USER_ID}`).once('value')
     .then(function(snapshot){
-      $("#esthe").html("");
+      clear()
       snapshot.forEach(function(childSnapshot) {
-        let childKey = childSnapshot.key;
-        let childData = childSnapshot.val().posts;
-        $("#esthe").prepend(`
-        <div>
-           <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
-           <button data-edit="${childKey}">Editar</button>
-           <p>${childData}</p>
-         </div>`)
- 
-         document.getElementById(childKey).addEventListener("click", () => remove(childKey));
+        const childKey = childSnapshot.key;
+        const childData = childSnapshot.val().posts;
+       
+        showDatabasePosts(childKey, childData)
+        $(`#${childKey}`).on("click", () => removePosts(childKey));
     });
   });
 }
 
- // FUNCAO QUE REMOVE POSTS DO BANCO (SOMENTE ISSO)
-function remove(key){
-  database.ref(`posts/${USER_ID}/${key}`).remove();
-  trazPostsDoBanco()
+function clear(){
+    $("#postsSection").html("");
+    $("#textAreaPost").val("")
 }
 
-document.getElementById("sendPost").addEventListener("click", () => {
-  gravaPostsNoBanco();
-  trazPostsDoBanco();
-})
+//Botão curtir e editar estão sem função
 
-function gravaPostsNoBanco(){
+function showDatabasePosts(childKey, childData){
+    const user = firebase.auth().currentUser
+    $("#postsSection").prepend(`
+    <div>
+      <p>${user.displayName}</p>
+      <p>${childData}</p>
+      <button>Curtir</button>
+      <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
+      <button data-edit="${childKey}">Editar</button>
+    </div>`)
+}
+
+function removePosts(key){
+    database.ref(`posts/${USER_ID}/${key}`).remove();
+    getDatabasePosts()
+}
+
+//Vai editar os posts na tela/in place
+function editPosts(){
+
+}
+
+//Vai atualizar os posts no banco de dados
+function updatePosts(){
+    database.ref(`posts/${USER_ID}/${key}`).update();
+}
+
+//Função de editar da Paloma
+//   $(`button[data-edit=${childKey}]`).click(function(){
+  //     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
+  //       $(this).attr("contentEditable", "false")
+  //     })
+  //   })
+  // })
+
+function storePostsOnDatabase(){
     const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
     firebase.database().ref(`posts/${USER_ID}`).push({
       posts: getPostFromTextarea()
@@ -44,24 +82,9 @@ function gravaPostsNoBanco(){
 }
 
 function getPostFromTextarea(){
-    return $("#post").val();
+    return $("#textAreaPost").val();
 };
  
-  // $("#sendPost").click(storePost);
-
-
-  // function storePost(){
-  //   const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-  //   const createPost = firebase.database().ref(`posts/${USER_ID}`).push({
-  //     posts: getPost()
-  //   });
-
-  //   return createPost;
-  // };
-
-  // $("#sendPost").click(()=>{
-  //   const user = firebase.auth().currentUser
-
   // $(".show-post").prepend(`<div>
   //     <p>${user.displayName}</p>
   //     <button data-delete="${childKey}" class="delete">Deletar</button>
