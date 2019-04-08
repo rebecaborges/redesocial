@@ -31,11 +31,13 @@ function getDatabasePosts() {
           if (deletePosts === true) removePosts(childKey)
         }
         );
-        $(`button[data-like="${childKey}"]`).click(function (event) {
+        $(`button[data-like="${childKey}"]`).click(function () {
           let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
           counter += 1
           $(`span[data-counter="${childKey}"]`).text(counter)
-
+          database.ref(`posts/${USER_ID}/${childKey}`).update({
+            likes: counter
+          })
         });
       });
     });
@@ -64,7 +66,8 @@ function getPostFromTextarea() {
 function isPublic(publicOrPrivate) {
   firebase.database().ref(`posts/${USER_ID}/`).push({
     posts: getPostFromTextarea(),
-    public: publicOrPrivate
+    public: publicOrPrivate,
+    likes: 0
   });
 };
 
