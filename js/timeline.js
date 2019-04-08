@@ -60,10 +60,10 @@ function removePosts(key) {
 function editPosts(childKey,childData) {
   $(`button[data-edit-id=${childKey}]`).click(function () {
     let postEdited = prompt(`Edite seu post: ${childData}`);
+    $(`p[${childData}]`).html(postEdited);
     database.ref(`posts/` + key).set ({
       childData: postEdited
     })
-    $(`p[${childData}]`).html(postEdited);
   });
 }
 
