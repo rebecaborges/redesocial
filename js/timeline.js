@@ -36,7 +36,10 @@ function getDatabasePosts() {
         const childData = childSnapshot.val().posts;
 
         showDatabasePosts(childKey, childData)
-        $(`#${childKey}`).on("click", () => removePosts(childKey)
+        $(`#${childKey}`).on("click", () => {
+          const deletePosts = confirm("Excluir post?")
+          if (deletePosts === true)removePosts(childKey)
+        }
 
         );
       });
@@ -76,8 +79,8 @@ function clear() {
 };
 
 function removePosts(key) {
-  getDatabasePosts();
   database.ref(`posts/${USER_ID}/${key}`).remove();
+  getDatabasePosts();
 };
 
 //Vai editar os posts na tela/in place
