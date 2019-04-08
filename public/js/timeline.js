@@ -6,9 +6,10 @@ $(document).ready(() => {
 
   $("#sendPost").on("click", () => {
     getDatabasePosts();
-    if (document.querySelector("#select").selectedIndex === 1) {
+    console.log($("#select").val())
+    if ($("#select").val() == "public") {
       isPublic(true);
-    } else if (document.querySelector("#select").selectedIndex === 2) {
+    } else if ($("#select").val() == "private") {
       isPublic(false);
     };
     document.querySelector("#select").selectedIndex = 0;
@@ -24,13 +25,34 @@ function getDatabasePosts() {
         const childKey = childSnapshot.key;
 
         const childData = childSnapshot.val().posts;
-
-        showDatabasePosts(childKey, childData)
+        const likes = childSnapshot.val().likes;
+        showDatabasePosts(childKey, childData, likes)
+        
         $(`#${childKey}`).on("click", () => {
           const deletePosts = confirm("Excluir post?")
           if (deletePosts === true) removePosts(childKey)
         }
         );
+
+
+        $(`button[data-edit="${childKey}"]`).click(()=>{ 
+          $(`p[data-texto-id="${childKey}"]`)
+            .attr("contentEditable", "true")
+            .focus()
+            .blur(() => {
+              
+              console.log($(event.target).text())
+              console.log($(this))
+              $(event.target).attr("contentEditable", "false")
+              database.ref(`posts/${USER_ID}/${childKey}`).update({
+                posts: $(event.target).text()
+              })
+            });
+
+      
+          
+        })
+
         $(`button[data-like="${childKey}"]`).click(function () {
           let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
           counter += 1
@@ -43,17 +65,17 @@ function getDatabasePosts() {
     });
 };
 
-function showDatabasePosts(childKey, childData) {
+function showDatabasePosts(childKey, childData, likes) {
   const user = firebase.auth().currentUser
   $("#postsSection").prepend(`
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <div>
       <p>${user.displayName}</p>
-      <p>${childData}</p>
+      <p data-texto-id="${childKey}">${childData}</p>
       <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       <button data-edit="${childKey}">Editar</button>
       <button data-like="${childKey}" type="button" class="like btn btn-primary">
-        Curtir <span data-counter="${childKey}" class="counter badge badge-light">0</span>
+        Curtir <span data-counter="${childKey}" class="counter badge badge-light">${likes}</span>
       </button>
     </div>`)
 
@@ -86,11 +108,9 @@ function updatePosts() {
   database.ref(`posts/${USER_ID}/${key}`).update();
 };
 
-//Função de editar da Paloma
+// Função de editar da Paloma
 //   $(`button[data-edit=${childKey}]`).click(function(){
-//     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
-//       $(this).attr("contentEditable", "false")
-//     })
+   
 //   })
 // })
 
