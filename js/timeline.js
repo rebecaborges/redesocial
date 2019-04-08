@@ -15,62 +15,29 @@ $(document).ready(() => {
   getDatabasePosts();
 
   $("#sendPost").on("click", () => {
-     if(document.querySelector("#select").selectedIndex === 1){
+    getDatabasePosts();
+    if (document.querySelector("#select").selectedIndex === 1) {
       isPublic(true);
+    } else if (document.querySelector("#select").selectedIndex === 2) {
+      isPublic(false);
+    };
+    document.querySelector("#select").selectedIndex = 0;
+  });
 
-     }else if (document.querySelector("#select").selectedIndex === 2){
-       isPublic(false);
-     }
-    
-     document.querySelector("#select").selectedIndex = 0;
-  })
-
-  // $(".change-select").on("change",() => {
-  //   if(document.querySelector("#select").selectedIndex ===1){
-  //     changePublic();
-  //     $(".icon");
-  //   }else if(document.querySelector("#select").selectedIndex ===2){
-  //     changePublic(private);
-  //   }
-  // })
-})
-
-
-
-
-
-// function getDatabasePostsPublic() {
-//   database.ref(`posts/public/${USER_ID}`).once('value')
-//     .then(function (snapshot) {
-//       clear()
-//       snapshot.forEach(function (childSnapshot) {
-//         const childKey = childSnapshot.key;
-//         console.log(childKey)
-//         const childData = childSnapshot.val().posts;
-//         console.log(childData)
-
-//         showDatabasePosts(childKey, childData)
-//         $(`#${childKey}`).on("click", () => removePostsPublic(childKey) 
-        
-//         );
-//       });
-//     });
-// }
-
+});
 
 function getDatabasePosts() {
-  database.ref(`posts/public,private/${USER_ID}`).once('value')
+  database.ref(`posts/${USER_ID}`).once('value')
     .then(function (snapshot) {
       clear()
       snapshot.forEach(function (childSnapshot) {
         const childKey = childSnapshot.key;
-        console.log(childKey)
+
         const childData = childSnapshot.val().posts;
-        console.log(childData)
 
         showDatabasePosts(childKey, childData)
         $(`#${childKey}`).on("click", () => removePosts(childKey)
-        
+
         );
       });
     });
@@ -95,29 +62,13 @@ function showDatabasePosts(childKey, childData) {
     </div>`)
 }
 
-function isPublic(publicOrPrivate){
+function isPublic(publicOrPrivate) {
   USER_ID
   firebase.database().ref(`posts/${USER_ID}/`).push({
     posts: getPostFromTextarea(),
-    public : publicOrPrivate
+    public: publicOrPrivate
   });
 }
-
-function changePrivate (){
-  USER_ID
-  firebase.database().ref(`posts/private/${USER_ID}`).push({
-    posts: getPostFromTextarea()
-  });
-}
-
-
-// function storePostsOnDatabase() {
-//   const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-//   firebase.database().ref(`posts/${USER_ID}`).push({
-//     posts: getPostFromTextarea()
-//   });
-// }
-
 
 function clear() {
   $("#postsSection").html("");
@@ -129,17 +80,8 @@ function removePosts(key) {
   getDatabasePostsPublic();
 }
 
-// function removePostsPrivate(key) {
-//   database.ref(`posts/private/${USER_ID}/${key}`).remove();
-//   getDatabasePostsPrivate();
-// }
-
-
-
-
 //Vai editar os posts na tela/in place
 function editPosts() {
-
 }
 
 //Vai atualizar os posts no banco de dados
