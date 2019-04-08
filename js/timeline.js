@@ -41,7 +41,7 @@ function getDatabasePosts() {
         );
       });
     });
-}
+};
 
 function getPostFromTextarea() {
   return $("#textAreaPost").val();
@@ -60,7 +60,7 @@ function showDatabasePosts(childKey, childData) {
       <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       <button data-edit="${childKey}">Editar</button>
     </div>`)
-}
+};
 
 function isPublic(publicOrPrivate) {
   USER_ID
@@ -68,26 +68,26 @@ function isPublic(publicOrPrivate) {
     posts: getPostFromTextarea(),
     public: publicOrPrivate
   });
-}
+};
 
 function clear() {
   $("#postsSection").html("");
-  $("#textAreaPost").val("")
-}
+  $("#textAreaPost").val("");
+};
 
 function removePosts(key) {
-  database.ref(`public,private/${USER_ID}/${key}`).remove();
-  getDatabasePostsPublic();
-}
+  getDatabasePosts();
+  database.ref(`posts/${USER_ID}/${key}`).remove();
+};
 
 //Vai editar os posts na tela/in place
 function editPosts() {
-}
+};
 
 //Vai atualizar os posts no banco de dados
 function updatePosts() {
   database.ref(`posts/${USER_ID}/${key}`).update();
-}
+};
 
 //Função de editar da Paloma
 //   $(`button[data-edit=${childKey}]`).click(function(){
@@ -96,7 +96,6 @@ function updatePosts() {
 //     })
 //   })
 // })
-
 
   // $(".show-post").prepend(`<div>
   //     <p>${user.displayName}</p>
