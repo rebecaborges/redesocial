@@ -1,7 +1,7 @@
 const database = firebase.database();
 const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-const public = database.ref(`posts/public/${USER_ID}`);
-const private = database.ref(`posts/private/${USER_ID}`);
+//const public = database.ref(`posts/public/${USER_ID}`);
+//const private = database.ref(`posts/private/${USER_ID}`);
 //Mudar esse USER_ID para o método da Carol que fica mais bonito, eu acho rs
 //Usar mais on que é o event listener do jquery
 //Função do auto resize da text area está desativada, pesquisar se tem no bootstrap
@@ -15,25 +15,24 @@ $(document).ready(() => {
   getDatabasePosts();
 
   $("#sendPost").on("click", () => {
-    // if(document.querySelector("#select").value === "public"){
-      getDatabasePosts();
-      changePublic();
+     if(document.querySelector("#select").selectedIndex === 1){
+      isPublic(true);
 
-    // }else if (document.querySelector("#select").value === "private"){
-    //   getDatabasePostsPrivate();
-    // }
+     }else if (document.querySelector("#select").selectedIndex === 2){
+       isPublic(false);
+     }
     
-    // document.querySelector("#select").selectedIndex = 0;
+     document.querySelector("#select").selectedIndex = 0;
   })
 
-  $(".change-select").on("change",() => {
-    if(document.querySelector("#select").selectedIndex ===1){
-      changePublic();
-      $(".icon");
-    }else if(document.querySelector("#select").selectedIndex ===2){
-      changePublic(private);
-    }
-  })
+  // $(".change-select").on("change",() => {
+  //   if(document.querySelector("#select").selectedIndex ===1){
+  //     changePublic();
+  //     $(".icon");
+  //   }else if(document.querySelector("#select").selectedIndex ===2){
+  //     changePublic(private);
+  //   }
+  // })
 })
 
 
@@ -96,11 +95,11 @@ function showDatabasePosts(childKey, childData) {
     </div>`)
 }
 
-function changePublic(publicOrPrivate){
+function isPublic(publicOrPrivate){
   USER_ID
   firebase.database().ref(`posts/${USER_ID}/`).push({
     posts: getPostFromTextarea(),
-    privacy : publicOrPrivate
+    public : publicOrPrivate
   });
 }
 
