@@ -1,47 +1,55 @@
 const database = firebase.database();
 const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 //Mudar esse USER_ID para o método da Carol que fica mais bonito, eu acho rs
-//Usar mais on que é o event listener do jquery
 //Função do auto resize da text area está desativada, pesquisar se tem no bootstrap
-//usar template string onde der pq é o certo
 //Usar for in onde der
-//Usar mais arrow functions
 //Não permitir posts em branco
 //Substituir os templates pelos seus respectivos ícones, lixeira, coração e caneta
-//Função editar dando pau, só funcionava na versão com bugs e acho que vai ter que mudar a lógica pra ela voltar a funcionar
+//Função editar bugada
+//Botão curtir está sem função
 $(document).ready(() => {
-    getDatabasePosts();
+  getDatabasePosts();
 
-    $("#sendPost").on("click", () => {
-      storePostsOnDatabase();
-      getDatabasePosts();
-  })
+  $("#sendPost").on("click", () => {
+    getDatabasePosts();
+    if (document.querySelector("#select").selectedIndex === 1) {
+      isPublic(true);
+    } else if (document.querySelector("#select").selectedIndex === 2) {
+      isPublic(false);
+    };
+    document.querySelector("#select").selectedIndex = 0;
+  });
+
 });
 
-function getDatabasePosts(){
-    database.ref(`posts/${USER_ID}`).once('value')
-    .then(function(snapshot){
+function getDatabasePosts() {
+  database.ref(`posts/${USER_ID}`).once('value')
+    .then(function (snapshot) {
       clear()
-      snapshot.forEach(function(childSnapshot) {
+      snapshot.forEach(function (childSnapshot) {
         const childKey = childSnapshot.key;
+
         const childData = childSnapshot.val().posts;
-       
+
         showDatabasePosts(childKey, childData)
-        $(`#${childKey}`).on("click", () => removePosts(childKey));
+        $(`#${childKey}`).on("click", () => {
+          const deletePosts = confirm("Excluir post?")
+          if (deletePosts === true)removePosts(childKey)
+        }
+
+        );
+      });
     });
-  });
-}
+};
 
-function clear(){
-    $("#postsSection").html("");
-    $("#textAreaPost").val("")
-}
+function getPostFromTextarea() {
+  return $("#textAreaPost").val();
+};
 
-//Botão curtir e editar estão sem função
-
-function showDatabasePosts(childKey, childData){
-    const user = firebase.auth().currentUser
-    $("#postsSection").prepend(`
+function showDatabasePosts(childKey, childData) {
+  const user = firebase.auth().currentUser
+  $("#postsSection").prepend(`
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <div>
       <p>${user.displayName}</p>
       <p>${childData}</p>
@@ -49,42 +57,42 @@ function showDatabasePosts(childKey, childData){
       <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       <button data-edit="${childKey}">Editar</button>
     </div>`)
-}
+};
 
-function removePosts(key){
-    database.ref(`posts/${USER_ID}/${key}`).remove();
-    getDatabasePosts()
-}
+function isPublic(publicOrPrivate) {
+  firebase.database().ref(`posts/${USER_ID}/`).push({
+    posts: getPostFromTextarea(),
+    public: publicOrPrivate
+  });
+};
+
+function clear() {
+  $("#postsSection").html("");
+  $("#textAreaPost").val("");
+};
+
+function removePosts(key) {
+  database.ref(`posts/${USER_ID}/${key}`).remove();
+  getDatabasePosts();
+};
 
 //Vai editar os posts na tela/in place
-function editPosts(){
-
-}
+function editPosts() {
+};
 
 //Vai atualizar os posts no banco de dados
-function updatePosts(){
-    database.ref(`posts/${USER_ID}/${key}`).update();
-}
+function updatePosts() {
+  database.ref(`posts/${USER_ID}/${key}`).update();
+};
 
 //Função de editar da Paloma
 //   $(`button[data-edit=${childKey}]`).click(function(){
-  //     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
-  //       $(this).attr("contentEditable", "false")
-  //     })
-  //   })
-  // })
+//     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
+//       $(this).attr("contentEditable", "false")
+//     })
+//   })
+// })
 
-function storePostsOnDatabase(){
-    const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-    firebase.database().ref(`posts/${USER_ID}`).push({
-      posts: getPostFromTextarea()
-  });
-}
-
-function getPostFromTextarea(){
-    return $("#textAreaPost").val();
-};
- 
   // $(".show-post").prepend(`<div>
   //     <p>${user.displayName}</p>
   //     <button data-delete="${childKey}" class="delete">Deletar</button>
