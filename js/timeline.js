@@ -10,81 +10,89 @@ const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 //Substituir os templates pelos seus respectivos ícones, lixeira, coração e caneta
 //Função editar dando pau, só funcionava na versão com bugs e acho que vai ter que mudar a lógica pra ela voltar a funcionar
 $(document).ready(() => {
-    getDatabasePosts();
+  getDatabasePosts();
 
-    $("#sendPost").on("click", () => {
-      storePostsOnDatabase();
-      getDatabasePosts();
+  $("#sendPost").on("click", () => {
+    storePostsOnDatabase();
+    getDatabasePosts();
   })
 });
 
-function getDatabasePosts(){
-    database.ref(`posts/${USER_ID}`).once('value')
-    .then(function(snapshot){
+function getDatabasePosts() {
+  database.ref(`posts/${USER_ID}`).once('value')
+    .then(function (snapshot) {
       clear()
-      snapshot.forEach(function(childSnapshot) {
+      snapshot.forEach(function (childSnapshot) {
         const childKey = childSnapshot.key;
         const childData = childSnapshot.val().posts;
-       
+
         showDatabasePosts(childKey, childData)
         $(`#${childKey}`).on("click", () => removePosts(childKey));
+      });
     });
-  });
 }
 
-function clear(){
-    $("#postsSection").html("");
-    $("#textAreaPost").val("")
+function clear() {
+  $("#postsSection").html("");
+  $("#textAreaPost").val("")
 }
 
 //Botão curtir e editar estão sem função
 
-function showDatabasePosts(childKey, childData){
-    const user = firebase.auth().currentUser
-    $("#postsSection").prepend(`
+function showDatabasePosts(childKey, childData) {
+  const user = firebase.auth().currentUser
+  $("#postsSection").prepend(`
     <div>
       <p>${user.displayName}</p>
       <p>${childData}</p>
       <button>Curtir</button>
       <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
-      <button data-edit="${childKey}">Editar</button>
+      <button data-edit="${childKey}" id="${childKey}">Editar</button>
     </div>`)
 }
 
-function removePosts(key){
-    database.ref(`posts/${USER_ID}/${key}`).remove();
-    getDatabasePosts()
+function removePosts(key) {
+  database.ref(`posts/${USER_ID}/${key}`).remove();
+  getDatabasePosts()
 }
 
-//Vai editar os posts na tela/in place
-function editPosts(){
-
+//Vai editar os posts na tela/in place // utilizar val quando mudar pra input
+function editPosts(childKey,childData) {
+  $(`button[data-edit-id=${childKey}]`).click(function () {
+    let postEdited = prompt(`Edite seu post: ${childData}`);
+    database.ref(`posts/` + key).set ({
+      childData: postEdited
+    })
+    $(`p[${childData}]`).html(postEdited);
+  });
 }
+
+
 
 //Vai atualizar os posts no banco de dados
-function updatePosts(){
-    database.ref(`posts/${USER_ID}/${key}`).update();
+function updatePosts() {
+  database.ref(`posts/${USER_ID}/${key}`).update();
 }
 
 //Função de editar da Paloma
 //   $(`button[data-edit=${childKey}]`).click(function(){
-  //     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
-  //       $(this).attr("contentEditable", "false")
-  //     })
-  //   })
-  // })
+//     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
+//       $(this).attr("contentEditable", "false")
+//     })
+//   })
+// })
 
-function storePostsOnDatabase(){
-    const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-    firebase.database().ref(`posts/${USER_ID}`).push({
-      posts: getPostFromTextarea()
+function storePostsOnDatabase() {
+  const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
+  firebase.database().ref(`posts/${USER_ID}`).push({
+    posts: getPostFromTextarea()
   });
 }
 
-function getPostFromTextarea(){
-    return $("#textAreaPost").val();
+function getPostFromTextarea() {
+  return $("#textAreaPost").val();
 };
- 
+
   // $(".show-post").prepend(`<div>
   //     <p>${user.displayName}</p>
   //     <button data-delete="${childKey}" class="delete">Deletar</button>
