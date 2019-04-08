@@ -1,16 +1,12 @@
 const database = firebase.database();
 const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-//const public = database.ref(`posts/public/${USER_ID}`);
-//const private = database.ref(`posts/private/${USER_ID}`);
 //Mudar esse USER_ID para o método da Carol que fica mais bonito, eu acho rs
-//Usar mais on que é o event listener do jquery
 //Função do auto resize da text area está desativada, pesquisar se tem no bootstrap
-//usar template string onde der pq é o certo
 //Usar for in onde der
-//Usar mais arrow functions
 //Não permitir posts em branco
 //Substituir os templates pelos seus respectivos ícones, lixeira, coração e caneta
-//Função editar dando pau, só funcionava na versão com bugs e acho que vai ter que mudar a lógica pra ela voltar a funcionar
+//Função editar bugada
+//Botão curtir está sem função
 $(document).ready(() => {
   getDatabasePosts();
 
@@ -50,8 +46,6 @@ function getPostFromTextarea() {
   return $("#textAreaPost").val();
 };
 
-//Botão curtir e editar estão sem função
-
 function showDatabasePosts(childKey, childData) {
   const user = firebase.auth().currentUser
   $("#postsSection").prepend(`
@@ -66,7 +60,6 @@ function showDatabasePosts(childKey, childData) {
 };
 
 function isPublic(publicOrPrivate) {
-  USER_ID
   firebase.database().ref(`posts/${USER_ID}/`).push({
     posts: getPostFromTextarea(),
     public: publicOrPrivate
