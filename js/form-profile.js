@@ -1,9 +1,10 @@
-$(document).ready(function () {
-  $('#saveProfileBtn').click(function (event) {
+
+$(document).ready( ()=> {
+  $('#saveProfileBtn').click(function(event) {
+    event.preventDefault()
     const user = firebase.auth().currentUser
     const name = $('#name').val()
-    event.preventDefault()
-
+  
   user.updateProfile({
     displayName: name
   })
@@ -15,7 +16,7 @@ $(document).ready(function () {
       state: $('#state').val(),
       birthDate: $('#birthDate').val(),
       userName: $('#userName').val()
-    }).then(function () {
+    }).then( ()=> {
       window.location = `timeline.html?id=${user.uid}`;
     })
   });

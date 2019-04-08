@@ -1,6 +1,6 @@
-$(document).ready(function(){
+$(document).ready(()=>{
 
-  $("#signUpButton").click(function(){
+  $("#signUpButton").click(()=>{
     window.location = "create-account.html"
   })
 
@@ -10,14 +10,13 @@ $(document).ready(function(){
 
 })
 
-function signInEmail(){
-    // const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-    let email = $("#signInEmail").val()
-    let password = $("#signInPassword").val()
+function signInEmail(event){
+    const email = $("#signInEmail").val()
+    const password = $("#signInPassword").val()
     event.preventDefault();
 
     firebase.auth().signInWithEmailAndPassword(email, password).then(function(response) {''
-    window.location= "timeline.html?id="+response.user.uid;
+    window.location= `timeline.html?id=${response.user.uid}`;
   })
 
   .catch(function(error){
@@ -32,8 +31,8 @@ function signInGoogle(){
   firebase.auth().signInWithPopup(provider)
   .then(function(response) {
     if(response.additionalUserInfo.isNewUser){
-      window.location = "form-profile.html?id="+response.user.uid;
-    }else{window.location = "timeline.html?id="+response.user.uid;}
+      window.location = `form-profile.html?id=${response.user.uid}`;
+    }else{window.location = `timeline.html?id=${response.user.uid}`}
   })
   .catch(function(error) {
     const errorCode = error.code;
@@ -44,4 +43,4 @@ function signInGoogle(){
   });
 }
 
-
+//function signInFacebook(){}
