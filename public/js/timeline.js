@@ -36,8 +36,15 @@ function getDatabasePosts() {
           const deletePosts = confirm("Excluir post?")
           if (deletePosts === true)removePosts(childKey)
         }
-
         );
+        $(`button[data-esthe="${childKey}"]`).click(function(event){
+          let iana = parseInt($(`span[data-iana="${childKey}"]`).text());
+          iana += 1
+          $(`span[data-iana="${childKey}"]`).text(iana)
+      
+        });
+
+
       });
     });
 };
@@ -53,11 +60,17 @@ function showDatabasePosts(childKey, childData) {
     <div>
       <p>${user.displayName}</p>
       <p>${childData}</p>
-      <button>Curtir</button>
       <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       <button data-edit="${childKey}">Editar</button>
+      <button data-esthe="${childKey}" type="button" class="like btn btn-primary">
+        Curtir <span data-iana="${childKey}" class="counter badge badge-light">0</span>
+      </button>
     </div>`)
+
 };
+
+
+  
 
 function isPublic(publicOrPrivate) {
   firebase.database().ref(`posts/${USER_ID}/`).push({
