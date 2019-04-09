@@ -111,8 +111,9 @@ function sendPostToDatabase(publicOrPrivate) {
     posts: getPostFromTextarea(),
     public: publicOrPrivate,
     likes: 0
+
   });
-};
+}
 
 function clear() {
   $("#postsSection").html("");
