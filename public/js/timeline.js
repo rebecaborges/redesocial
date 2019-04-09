@@ -43,17 +43,21 @@ function getDatabasePosts() {
           editPost(childKey)
         }) 
 
-        $(`button[data-like="${childKey}"]`).click(function () {
-          let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
-          counter++
-          $(`span[data-counter="${childKey}"]`).text(counter)
-          database.ref(`posts/${USER_ID}/${childKey}`).update({
-            likes: counter
-          })
+        $(`button[data-like="${childKey}"]`).on("click", ()=>{
+         likePost(childKey)
         });
       });
     });
 };
+
+function likePost(childKey){
+  let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
+  counter++
+  $(`span[data-counter="${childKey}"]`).text(counter)
+  database.ref(`posts/${USER_ID}/${childKey}`).update({
+    likes: counter
+  })
+}
 
 function editPost(childKey){
   $(`p[data-texto-id="${childKey}"]`)
