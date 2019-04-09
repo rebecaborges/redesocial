@@ -71,11 +71,17 @@ function editPost(childKey){
   });      
 }
 
+function removePosts(key) {
+  database.ref(`posts/${USER_ID}/${key}`).remove();
+  getDatabasePosts();
+};
+
 function showDatabasePosts(childKey, childData, likes) {
   const user = firebase.auth().currentUser
   $("#postsSection").prepend(`
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <div>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <article>
       <p>${user.displayName}</p>
       <p data-texto-id="${childKey}">${childData}</p>
       <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
@@ -83,8 +89,7 @@ function showDatabasePosts(childKey, childData, likes) {
       <button data-like="${childKey}" type="button" class="like btn btn-primary">
         Curtir <span data-counter="${childKey}" class="counter badge badge-light">${likes}</span>
       </button>
-    </div>`)
-
+    </article>`)
 };
 
 function getPostFromTextarea() {
@@ -102,9 +107,4 @@ function sendPostToDatabase(publicOrPrivate) {
 function clear() {
   $("#postsSection").html("");
   $("#textAreaPost").val("");
-};
-
-function removePosts(key) {
-  database.ref(`posts/${USER_ID}/${key}`).remove();
-  getDatabasePosts();
 };
