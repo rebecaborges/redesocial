@@ -7,9 +7,9 @@ $(document).ready(() => {
   $("#sendPost").on("click", () => {
     getDatabasePosts();
     if ($("#select").val() === "public") {
-      isPublic(true);
+      sendPostToDatabase(true);
     } else if ($("#select").val() === "private") {
-      isPublic(false);
+      sendPostToDatabase(false);
     }
     $("#select").val($("#select").data("default-value"))
   });
@@ -91,7 +91,7 @@ function getPostFromTextarea() {
   return $("#textAreaPost").val();
 };
 
-function isPublic(publicOrPrivate) {
+function sendPostToDatabase(publicOrPrivate) {
   firebase.database().ref(`posts/${USER_ID}/`).push({
     posts: getPostFromTextarea(),
     public: publicOrPrivate,
