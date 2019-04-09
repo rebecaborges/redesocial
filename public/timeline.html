@@ -21,27 +21,38 @@
 </head>
 
 <body>
-  <header>
-    <h1>Logo</h1>
-  </header>
-  <main>
-    <section>
-      <textarea id="textAreaPost" cols="35" rows="5"></textarea>
-
-      <button type="submit" id="sendPost">Postar</button>
-      <div class="">
-        <i class="fas fa-globe-americas icon-public" ></i>
-        <select class="change-select" id="select" data-default-value="selected">
-          <option value="selected">Selecione uma opção</option>
-          <option value="public">Público</option>
-          <option value="private">Privado</option>
-        </select>
-      </div>
-
-      <section class="show-post" id="postsSection"></section>
-
+  <header class="container-fluid p-0 d-flex">
+    <section class="container-fluid p-0 d-flex">
+      <img src="images/chama-as-mina-header.jpg">
     </section>
-  </main>
+  </header>
+  <div class="row">
+    <div class="col-md-1">
+    </div>
+
+    <main class="container-fluid col-md-10 d-flex justify-content-center">
+      <section>
+        <article> Criar publicação</article>
+        <textarea id="textAreaPost" placeholder="O que você está precisando?" cols="80" rows="5"></textarea>
+        <section class="buttons btn-lg d-flex align-items-center">
+          <select class="change-select" id="select" data-default-value="selected">
+            <option value="selected">Selecione uma opção</option>
+            <option value="public">Público</option>
+            <option value="private">Privado</option>
+          </select>
+
+          <button type="submit" class="btn btn-primary btn-sm btn-block m-2" id="sendPost">Compartihar</button>
+        </section>
+
+        <section class="show-post" id="postsSection"></section>
+
+      </section>
+    </main>
+
+    <div class="col-md-1">
+    </div>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>

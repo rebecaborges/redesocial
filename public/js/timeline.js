@@ -76,21 +76,31 @@ function removePosts(key) {
   getDatabasePosts();
 };
 
+
 function showDatabasePosts(childKey, childData, likes) {
   const user = firebase.auth().currentUser
   $("#postsSection").prepend(`
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <article>
-      <p>${user.displayName}</p>
-      <p data-texto-id="${childKey}">${childData}</p>
-      <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
-      <button data-edit="${childKey}">Editar</button>
+    <section class="card border-success mb-3 show-post" style="max-width: 40rem;">
+      <header class="card-header bg-transparent border-success">${user.displayName}</header>
+      <aticle class="card-body text-success">
+      <p class="card-text" data-texto-id="${childKey}">${childData}</p>
+      </article>
+      <footer class="card-footer bg-transparent border-success">
       <button data-like="${childKey}" type="button" class="like btn btn-primary">
         Curtir <span data-counter="${childKey}" class="counter badge badge-light">${likes}</span>
       </button>
-    </article>`)
+      <button class="btn btn-primary" data-edit="${childKey}">Editar</button>
+      <button class="btn btn-primary" data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
+      </footer>
+    </section>`)
+
+
+
+
 };
+
 
 function getPostFromTextarea() {
   return $("#textAreaPost").val();
