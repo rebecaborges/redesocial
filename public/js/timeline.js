@@ -11,7 +11,7 @@ $(document).ready(() => {
     } else if ($("#select").val() === "private") {
       isPublic(false);
     }
-    document.querySelector("#select").selectedIndex = 0;
+    $("#select").val($("#select").data("default-value"))
   });
 
   const text = $('#textAreaPost');
