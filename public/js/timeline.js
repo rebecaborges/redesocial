@@ -6,13 +6,18 @@ $(document).ready(() => {
 
   $("#sendPost").on("click", () => {
     getDatabasePosts();
-    console.log($("#select").val())
     if ($("#select").val() == "public") {
       isPublic(true);
     } else if ($("#select").val() == "private") {
       isPublic(false);
-    };
+    }
     document.querySelector("#select").selectedIndex = 0;
+  });
+
+  const text = $('#textAreaPost');
+  text.on('change drop keydown cut paste', function() {
+    text.height('auto');
+	  text.height(text.prop('scrollHeight'));
   });
 
 });
@@ -34,28 +39,21 @@ function getDatabasePosts() {
         }
         );
 
-
         $(`button[data-edit="${childKey}"]`).click(()=>{ 
           $(`p[data-texto-id="${childKey}"]`)
             .attr("contentEditable", "true")
             .focus()
-            .blur(() => {
-              
-              console.log($(event.target).text())
-              console.log($(this))
+            .blur(() => {         
               $(event.target).attr("contentEditable", "false")
               database.ref(`posts/${USER_ID}/${childKey}`).update({
                 posts: $(event.target).text()
               })
-            });
-
-      
-          
+            });        
         })
 
         $(`button[data-like="${childKey}"]`).click(function () {
           let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
-          counter += 1
+          counter++
           $(`span[data-counter="${childKey}"]`).text(counter)
           database.ref(`posts/${USER_ID}/${childKey}`).update({
             likes: counter
@@ -102,20 +100,3 @@ function removePosts(key) {
   database.ref(`posts/${USER_ID}/${key}`).remove();
   getDatabasePosts();
 };
-
-//Vai atualizar os posts no banco de dados
-function updatePosts() {
-  database.ref(`posts/${USER_ID}/${key}`).update();
-};
-
-// Função de editar da Paloma
-//   $(`button[data-edit=${childKey}]`).click(function(){
-   
-//   })
-// })
-
-// const text = $('#post');
-// text.on('change drop keydown cut paste', function() {
-//   text.height('auto');
-// 	text.height(text.prop('scrollHeight'));
-// });
