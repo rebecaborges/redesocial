@@ -8,9 +8,9 @@
 
 #### Personas:
 
-![Barbara](images/Barbara.png)
+![Barbara](public/images/Barbara.png)
 
-![Maria](images/Maria.png)
+![Maria](puclic/images/Maria.png)
 
 #### Protótipo:
 

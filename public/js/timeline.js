@@ -1,107 +1,111 @@
 const database = firebase.database();
 const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 
-$(document).ready(function() {
-  trazPostsDoBanco();
+$(document).ready(() => {
+  getDatabasePosts();
+
+  $("#sendPost").on("click", () => {
+    getDatabasePosts();
+    if ($("#select").val() === "public") {
+      sendPostToDatabase(true);
+    } else if ($("#select").val() === "private") {
+      sendPostToDatabase(false);
+    }
+    $("#select").val($("#select").data("default-value"))
+  });
+
+  const text = $('#textAreaPost');
+  text.on('change drop keydown cut paste', function() {
+    text.height('auto');
+	  text.height(text.prop('scrollHeight'));
+  });
+
 });
 
-function trazPostsDoBanco(){
-    // FUNCAO QUE POSTA NA TELA O QUE ESTA NO BANCO
-    database.ref('posts/'+ USER_ID).once('value')
-    .then(function(snapshot){
-      $("#esthe").html("");
-      snapshot.forEach(function(childSnapshot) {
-        let childKey = childSnapshot.key;
-        let childData = childSnapshot.val().posts;
-        $("#esthe").prepend(`
-        <div>
-           <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
-           <button data-edit="${childKey}">Editar</button>
-           <p>${childData}</p>
-         </div>`)
- 
-         document.getElementById(childKey).addEventListener("click", () => remove(childKey));
+function getDatabasePosts() {
+  database.ref(`posts/${USER_ID}`).once('value')
+    .then(function (snapshot) {
+      clear()
+      snapshot.forEach(function (childSnapshot) {
+        const childKey = childSnapshot.key;
+
+        const childData = childSnapshot.val().posts;
+        const likes = childSnapshot.val().likes;
+        showDatabasePosts(childKey, childData, likes)
+        
+        $(`#${childKey}`).on("click", () => {
+          const deletePosts = confirm("Excluir post?")
+          if (deletePosts === true) removePosts(childKey)
+        }
+        );
+
+        $(`button[data-edit="${childKey}"]`).on("click", ()=>{
+          editPost(childKey)
+        }) 
+
+        $(`button[data-like="${childKey}"]`).on("click", ()=>{
+         likePost(childKey)
+        });
+      });
     });
-  });
-}
-
- // FUNCAO QUE REMOVE POSTS DO BANCO (SOMENTE ISSO)
-function remove(key){
-  database.ref(`posts/${USER_ID}/${key}`).remove();
-  trazPostsDoBanco()
-}
-
-document.getElementById("sendPost").addEventListener("click", () => {
-  gravaPostsNoBanco();
-  trazPostsDoBanco();
-})
-
-function gravaPostsNoBanco(){
-    const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-    firebase.database().ref(`posts/${USER_ID}`).push({
-      posts: getPostFromTextarea()
-  });
-}
-
-function getPostFromTextarea(){
-    return $("#post").val();
 };
- 
-  // $("#sendPost").click(storePost);
 
+function likePost(childKey){
+  let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
+  counter++
+  $(`span[data-counter="${childKey}"]`).text(counter)
+  database.ref(`posts/${USER_ID}/${childKey}`).update({
+    likes: counter
+  })
+}
 
-  // function storePost(){
-  //   const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
-  //   const createPost = firebase.database().ref(`posts/${USER_ID}`).push({
-  //     posts: getPost()
-  //   });
+function editPost(childKey){
+  $(`p[data-texto-id="${childKey}"]`)
+  .attr("contentEditable", "true")
+  .focus()
+  .blur(() => {         
+    $(event.target).attr("contentEditable", "false")
+    database.ref(`posts/${USER_ID}/${childKey}`).update({
+      posts: $(event.target).text()
+    })
+  });      
+}
 
-  //   return createPost;
-  // };
+function removePosts(key) {
+  database.ref(`posts/${USER_ID}/${key}`).remove();
+  getDatabasePosts();
+};
 
-  // $("#sendPost").click(()=>{
-  //   const user = firebase.auth().currentUser
+function showDatabasePosts(childKey, childData, likes) {
+  const user = firebase.auth().currentUser
+  $("#postsSection").prepend(`
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <article>
+      <p>${user.displayName}</p>
+      <p data-texto-id="${childKey}">${childData}</p>
+      <button data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
+      <button data-edit="${childKey}">Editar</button>
+      <button data-like="${childKey}" type="button" class="like btn btn-primary">
+        Curtir <span data-counter="${childKey}" class="counter badge badge-light">${likes}</span>
+      </button>
+    </article>`)
+};
 
-  // $(".show-post").prepend(`<div>
-  //     <p>${user.displayName}</p>
-  //     <button data-delete="${childKey}" class="delete">Deletar</button>
-  //     <button data-edit="${childKey}">Editar</button>
-  //     <p>${getPost()}</p>
-  //   </div>`)
+function getPostFromTextarea() {
+  return $("#textAreaPost").val();
+};
 
-  //   $(".delete").click(function(){
-  //     // console.log(childKey)
-  //     $(this).parent().remove();
-  //     database.ref(`posts/${USER_ID}/${childKey}`).remove();
+function sendPostToDatabase(publicOrPrivate) {
+  firebase.database().ref(`posts/${USER_ID}/`).push({
+    posts: getPostFromTextarea(),
+    public: publicOrPrivate,
+    likes: 0
 
-  //   })
-  //   $(`button[data-edit=${childKey}]`).click(function(){
-  //     $(this).nextAll("p:first").attr("contentEditable", "true").focus().blur(function(){
-  //       $(this).attr("contentEditable", "false")
-  //     })
-  //   })
-  // })
+  });
+}
 
-// $("#sendPost").click(var user = firebase.auth().currentUser {
-//   if (user) {
-//     // User is signed in.
-//     var displayName = user.displayName;
-//     // var email = user.email;
-//     // var emailVerified = user.emailVerified;
-//     // var photoURL = user.photoURL;
-//     // var isAnonymous = user.isAnonymous;
-//     // var uid = user.uid;
-//     // var providerData = user.providerData;
-//    $(".show-post").prepend(`<p>${displayName}</p>`)
-//   } else {
-//     // User is signed out.
-//     // ...
-//   }
-// }))
-
-
-// const text = $('#post');
-// text.on('change drop keydown cut paste', function() {
-//   text.height('auto');
-// 	text.height(text.prop('scrollHeight'));
-// });
+function clear() {
+  $("#postsSection").html("");
+  $("#textAreaPost").val("");
+};
