@@ -39,17 +39,9 @@ function getDatabasePosts() {
         }
         );
 
-        $(`button[data-edit="${childKey}"]`).click(()=>{ 
-          $(`p[data-texto-id="${childKey}"]`)
-            .attr("contentEditable", "true")
-            .focus()
-            .blur(() => {         
-              $(event.target).attr("contentEditable", "false")
-              database.ref(`posts/${USER_ID}/${childKey}`).update({
-                posts: $(event.target).text()
-              })
-            });        
-        })
+        $(`button[data-edit="${childKey}"]`).on("click", ()=>{
+          editPost(childKey)
+        }) 
 
         $(`button[data-like="${childKey}"]`).click(function () {
           let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
@@ -62,6 +54,18 @@ function getDatabasePosts() {
       });
     });
 };
+
+function editPost(childKey){
+  $(`p[data-texto-id="${childKey}"]`)
+  .attr("contentEditable", "true")
+  .focus()
+  .blur(() => {         
+    $(event.target).attr("contentEditable", "false")
+    database.ref(`posts/${USER_ID}/${childKey}`).update({
+      posts: $(event.target).text()
+    })
+  });      
+}
 
 function showDatabasePosts(childKey, childData, likes) {
   const user = firebase.auth().currentUser
