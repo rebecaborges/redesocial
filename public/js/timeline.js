@@ -6,9 +6,9 @@ $(document).ready(() => {
 
   $("#sendPost").on("click", () => {
     getDatabasePosts();
-    if ($("#select").val() == "public") {
+    if ($("#select").val() === "public") {
       isPublic(true);
-    } else if ($("#select").val() == "private") {
+    } else if ($("#select").val() === "private") {
       isPublic(false);
     }
     document.querySelector("#select").selectedIndex = 0;
