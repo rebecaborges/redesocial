@@ -6,13 +6,13 @@ $(document).ready(() => {
   disableButton();
 
   $("#filterPostsSelect").on("change", () => {
-    if (document.querySelector("#filterPostsSelect").selectedIndex ===0){
-     getDatabasePosts()
+    if ($("#filterPostsSelect").val() === "all"){
+     getDatabasePosts(undefined)
     }
-    else if (document.querySelector("#filterPostsSelect").selectedIndex ===1) {
+    else if ($("#filterPostsSelect").val() === "public") {
      getDatabasePosts(true)
     }
-    else if (document.querySelector("#filterPostsSelect").selectedIndex ===2){
+    else if ($("#filterPostsSelect").val() === "private"){
       getDatabasePosts(false)
     }
   });
