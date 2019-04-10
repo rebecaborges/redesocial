@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/create-account.css">
   <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
@@ -35,21 +35,18 @@
       </figure>
     </section>
 
-
-    <form>
-      <div class="form-group">
-        <article class="style-font-title mb-2">Digite seu e-mail e senha para criar conta</article>
-        <input type="email" class="form-control m-0" id="signUpEmail" placeholder="E-mail">
-      </div>
-
-      <div class="form-group">
-        <input type="password" class="form-control m-0" id="signUpPassword" placeholder="Senha">
-      </div>
-
-      <div class="d-flex justify-content-center">
-        <input class="btn mt-3 btn-style" type="submit" value="CRIAR CONTA" id="signUpButton">
-      </div>
-    </form>
+    <section class="form-signup d-flex justify-content-center">
+      <form class="form-wrap">
+        <div class="form-group">
+          <article class="style-font-title mb-2">Digite seu e-mail e senha para criar conta</article>
+          <input type="email" class="form-control m-0" id="signUpEmail" placeholder="E-mail">
+          <input type="password" class="form-control mt-2" id="signUpPassword" placeholder="Senha">
+          <div class="d-flex justify-content-center">
+            <input class="btn mt-3 btn-style" type="submit" value="CRIAR CONTA" id="signUpButton">
+          </div>
+        </div>
+      </form>
+    </section>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -12,6 +12,14 @@ body {
   color: white;
 }
 
+.form-signup {
+  width: 100%;
+}
+
+.form-wrap {
+  width: 80%;
+}
+
 .btn-style {
     background-color: #fce804;
     font-family: "Roboto", sans-serif;
@@ -43,4 +51,10 @@ body {
 
 .social-network .icon-google {
 	background-color:#BD3518;
+}
+
+@media (max-width: 576px) { 
+  .form-wrap {
+    width: 80%;
+  }
 }
