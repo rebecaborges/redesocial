@@ -91,22 +91,22 @@ function removePosts(key) {
 
 
 function showDatabasePosts(childKey, childData, likes, privacy, boolean) {
-  const user = firebase.auth().currentUser
   if(privacy === boolean){
-    createTemplates(childKey, childData, likes, user)
+    createTemplates(childKey, childData, likes)
   }
   else if (boolean === undefined){
-    createTemplates(childKey, childData, likes, user)
+    createTemplates(childKey, childData, likes)
   }
 };
 
-function createTemplates(childKey, childData, likes, user){
+function createTemplates(childKey, childData, likes){
+  const user = firebase.auth().currentUser
   $("#postsSection").prepend(`
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <section class="card border-success mb-3 show-post" style="max-width: 40rem;">
       <header class="card-header bg-transparent border-success">${user.displayName}</header>
-      <aticle class="card-body text-success">
+      <article class="card-body text-success">
       <p class="card-text" data-texto-id="${childKey}">${childData}</p>
       </article>
       <footer class="card-footer bg-transparent border-success">
