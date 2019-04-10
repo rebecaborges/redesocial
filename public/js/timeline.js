@@ -46,7 +46,7 @@ $(document).ready(() => {
   // }
 })
 
-function getDatabasePosts(verdadeiroOuFalso) {
+function getDatabasePosts(boolean) {
   database.ref(`posts/${USER_ID}`).once('value')
     .then(function (snapshot) {
       clear()
@@ -57,7 +57,7 @@ function getDatabasePosts(verdadeiroOuFalso) {
         const likes = childSnapshot.val().likes;
         const privacy = childSnapshot.val().public;
         //const booleano = true && false
-        showDatabasePosts(childKey, childData, likes, privacy, verdadeiroOuFalso)
+        showDatabasePosts(childKey, childData, likes, privacy, boolean)
         
         $(`#${childKey}`).on("click", () => {
           const deletePosts = confirm("Excluir post?")
@@ -103,10 +103,9 @@ function removePosts(key) {
 };
 
 
-function showDatabasePosts(childKey, childData, likes, privacy, verdadeiroOuFalso) {
+function showDatabasePosts(childKey, childData, likes, privacy, boolean) {
   const user = firebase.auth().currentUser
-  console.log(verdadeiroOuFalso)
-  if(privacy === verdadeiroOuFalso){
+  if(privacy === boolean){
   $("#postsSection").prepend(`
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -124,7 +123,7 @@ function showDatabasePosts(childKey, childData, likes, privacy, verdadeiroOuFals
       </footer>
     </section>`)
   }
-  else if (verdadeiroOuFalso === undefined){
+  else if (boolean === undefined){
     $("#postsSection").prepend(`
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
