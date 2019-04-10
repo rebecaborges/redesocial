@@ -8,8 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/form-profile.css">
   <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-database.js"></script>
@@ -17,60 +17,65 @@
 </head>
 
 <body>
-  <form>
-    <div class="form-group col-md-6">
-      <label for="formGroupExampleInput">Perfil</label>
-      <input type="text" class="form-control" id="name" placeholder="Nome">
-    </div>
+  <header class="container-fluid d-flex justify-content-center p-0 header-logo">
+    <img src="images/chama-as-mina-header.jpg" class="image-responsive">
+  </header>
 
-    <div class="form-group col-md-6">
-      <input type="text" class="form-control" id="surname" placeholder="Sobrenome">
-    </div>
+  <main>
+    <form class="form-group col-md-6">
 
-    <div class="form-group col-md-6">
-      <input type="text" class="form-control" id="profession" placeholder="Profissão">
-    </div>
+      <article class="formGroupExampleInput">Perfil</article>
 
-    <div class="form-group col-md-6">
-      <div class="form-row">
-        <div class="form-group col-md-6 mb-1.5">
-          <input type="text" class="form-control" id="city" placeholder="Cidade">
+      <form class="form-group col-md-6">
+        <input type="text" class="form-control" id="name" placeholder="Nome">
+      </form>
+
+      <form class="form-group col-md-6">
+        <input type="text" class="form-control" id="surname" placeholder="Sobrenome">
+      </form>
+
+      <form class="form-group col-md-6">
+        <input type="text" class="form-control" id="profession" placeholder="Profissão">
+      </form>
+
+      <form class="form-group col-md-6 form-row">
+          <div class="form-group col-md-6 mb-1.5">
+            <input type="text" class="form-control" id="city" placeholder="Cidade">
+          </div>
+          <div class="form-group col-md-3 mb-0">
+            <input type="text" class="form-control" id="state" placeholder="Estado">
+          </div>
+        </form>
+
+        <form class="form-group col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <article class="input-group-text" id="">Data de Nascimento</article>
+            </div>
+            <div>
+              <input type="date" class="form-control" id="birthDate" placeholder="Usuário"
+                aria-describedby="inputGroupPrepend2">
+            </div>
+          </div>
+        </form>
+
+        <div class="form-group col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupPrepend2">@</span>
+            </div>
+            <div>
+              <input type="text" class="form-control" id="userName" placeholder="Usuário"
+                aria-describedby="inputGroupPrepend2">
+            </div>
+          </div>
         </div>
-        <div class="form-group col-md-3 mb-0">
-          <input type="text" class="form-control" id="state" placeholder="Estado">
-        </div>
-      </div>
-    </div>
 
-    <div class="form-group col-md-6">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="">Data de Nascimento</span>
+        <div class="d-flex justify-content-center">
+          <input class="btn btn-primary mt-3" type="submit" value="CRIAR CONTA" id="saveProfileBtn">
         </div>
-        <div>
-          <input type="date" class="form-control" id="birthDate" placeholder="Usuário"
-            aria-describedby="inputGroupPrepend2">
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group col-md-6">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupPrepend2">@</span>
-        </div>
-        <div>
-          <input type="text" class="form-control" id="userName" placeholder="Usuário"
-            aria-describedby="inputGroupPrepend2">
-        </div>
-      </div>
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <input class="btn btn-primary mt-3" type="submit" value="CRIAR CONTA" id="saveProfileBtn">
-    </div>
-
-  </form>
+      </form>
+  </main>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
