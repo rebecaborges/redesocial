@@ -4,6 +4,19 @@ const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 $(document).ready(() => {
   getDatabasePosts();
 
+  $("#filterPostsSelect").on("change", () => {
+    if (document.querySelector("#filterPostsSelect").selectedIndex ===0){
+     getDatabasePosts(true || false)
+    }
+    else if (document.querySelector("#filterPostsSelect").selectedIndex ===1) {
+     getDatabasePosts(true)
+      //console.log("public")
+    }
+    else if (document.querySelector("#filterPostsSelect").selectedIndex ===2){
+      getDatabasePosts(false)
+    }
+  });
+
   $("#sendPost").on("click", () => {
     getDatabasePosts();
     if ($("#select").val() === "public") {
@@ -20,19 +33,9 @@ $(document).ready(() => {
 	  text.height(text.prop('scrollHeight'));
   });
 
-});
 
-$("#filterPostsSelect").on("change", () => {
-  if (document.querySelector("#filterPostsSelect").selectedIndex ===0){
-   getDatabasePosts()
-  }
-  else if (document.querySelector("#filterPostsSelect").selectedIndex ===1) {
-   getDatabasePosts()
-    //console.log("public")
-  }
-  else if (document.querySelector("#filterPostsSelect").selectedIndex ===2){
-    console.log("private")
-  }
+
+
   // if ($("#filterPostSelect").val() === "all") {
   //   console.log("all")
   // } else if ($("#filterPostSelect".val() === "public")){
@@ -43,7 +46,7 @@ $("#filterPostsSelect").on("change", () => {
   // }
 })
 
-function getDatabasePosts() {
+function getDatabasePosts(verdadeiroOuFalso) {
   database.ref(`posts/${USER_ID}`).once('value')
     .then(function (snapshot) {
       clear()
@@ -53,7 +56,8 @@ function getDatabasePosts() {
         const childData = childSnapshot.val().posts;
         const likes = childSnapshot.val().likes;
         const privacy = childSnapshot.val().public;
-        showDatabasePosts(childKey, childData, likes, privacy)
+        //const booleano = true && false
+        showDatabasePosts(childKey, childData, likes, privacy, verdadeiroOuFalso)
         
         $(`#${childKey}`).on("click", () => {
           const deletePosts = confirm("Excluir post?")
@@ -99,9 +103,10 @@ function removePosts(key) {
 };
 
 
-function showDatabasePosts(childKey, childData, likes, privacy) {
+function showDatabasePosts(childKey, childData, likes, privacy, verdadeiroOuFalso) {
   const user = firebase.auth().currentUser
-  if (privacy === true || privacy === false){
+  console.log(verdadeiroOuFalso)
+  if(privacy === verdadeiroOuFalso){
   $("#postsSection").prepend(`
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
