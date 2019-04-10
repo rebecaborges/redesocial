@@ -5,6 +5,17 @@ $(document).ready(() => {
   getDatabasePosts();
   disableButton();
 
+  $("#filterPostsSelect").on("change", () => {
+    if (document.querySelector("#filterPostsSelect").selectedIndex ===0){
+     getDatabasePosts()
+    }
+    else if (document.querySelector("#filterPostsSelect").selectedIndex ===1) {
+     getDatabasePosts(true)
+    }
+    else if (document.querySelector("#filterPostsSelect").selectedIndex ===2){
+      getDatabasePosts(false)
+    }
+  });
 
   $("#sendPost").on("click", () => {
     getDatabasePosts();
@@ -23,7 +34,7 @@ $(document).ready(() => {
   });
 });
 
-function getDatabasePosts() {
+function getDatabasePosts(boolean) {
   database.ref(`posts/${USER_ID}`).once('value')
     .then(function (snapshot) {
       clear();
@@ -31,9 +42,10 @@ function getDatabasePosts() {
         const childKey = childSnapshot.key;
         const childData = childSnapshot.val().posts;
         const likes = childSnapshot.val().likes;
-
-        showDatabasePosts(childKey, childData, likes)
-
+        const privacy = childSnapshot.val().public;
+        
+        showDatabasePosts(childKey, childData, likes, privacy, boolean)
+        
         $(`#${childKey}`).on("click", () => {
           const deletePosts = confirm("Excluir post?")
           if (deletePosts === true) removePosts(childKey)
@@ -51,14 +63,14 @@ function getDatabasePosts() {
     });
 };
 
-function showDatabasePosts(childKey, childData, likes) {
+function createTemplates(childKey, childData, likes){
   const user = firebase.auth().currentUser
   $("#postsSection").prepend(`
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <section class="card border-success mb-3 show-post" style="max-width: 40rem;">
       <header class="card-header bg-transparent border-success">${user.displayName}</header>
-      <aticle class="card-body text-success">
+      <article class="card-body text-success">
       <p class="card-text" data-texto-id="${childKey}">${childData}</p>
       </article>
       <footer class="card-footer bg-transparent border-success">
@@ -69,28 +81,37 @@ function showDatabasePosts(childKey, childData, likes) {
       <button class="btn btn-primary" data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       </footer>
     </section>`)
-};
+}
 
-function likePost(childKey) {
+function likePost(childKey){
   let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
   counter++
   $(`span[data-counter="${childKey}"]`).text(counter)
   database.ref(`posts/${USER_ID}/${childKey}`).update({
     likes: counter
-  })
-}
+  });
+};
 
-function editPost(childKey) {
+function editPost(childKey){
   $(`p[data-texto-id="${childKey}"]`)
-    .attr("contentEditable", "true")
-    .focus()
-    .blur(() => {
-      $(event.target).attr("contentEditable", "false")
-      database.ref(`posts/${USER_ID}/${childKey}`).update({
-        posts: $(event.target).text()
-      })
+  .attr("contentEditable", "true")
+  .focus()
+  .blur(() => {         
+    $(event.target).attr("contentEditable", "false")
+    database.ref(`posts/${USER_ID}/${childKey}`).update({
+      posts: $(event.target).text()
     });
-}
+  });
+};
+
+function showDatabasePosts(childKey, childData, likes, privacy, boolean) {
+  if(privacy === boolean){
+    createTemplates(childKey, childData, likes)
+  }
+  else if (boolean === undefined){
+    createTemplates(childKey, childData, likes)
+  };
+};
 
 function getPostFromTextarea() {
   return $("#textAreaPost").val();
@@ -102,7 +123,7 @@ function sendPostToDatabase(publicOrPrivate) {
     public: publicOrPrivate,
     likes: 0
   });
-}
+};
 
 function removePosts(key) {
   database.ref(`posts/${USER_ID}/${key}`).remove();
@@ -111,12 +132,12 @@ function removePosts(key) {
 
 function disableButton() {
   $("#sendPost").prop("disabled", true)
-  $('#textAreaPost').on("input change", function () {
+  $('#textAreaPost').on("input", function () {
     if ((this).val != "") {
       $("#sendPost").prop("disabled", !$(this).val().length)
-    }
-  })
-}
+    };
+  });
+};
 
 function clear() {
   $("#postsSection").html("");

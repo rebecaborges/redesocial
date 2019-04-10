@@ -10,7 +10,7 @@ $(document).ready(() => {
 
   $("#signInButtonFacebook").click(signInFacebook)
 
-})
+});
 
 function signInEmail(event) {
   const email = $("#signInEmail").val()
@@ -27,7 +27,7 @@ function signInEmail(event) {
       const errorMessage = error.message;
       alert(errorCode, errorMessage)
     });
-}
+};
 
 function signInGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
@@ -44,7 +44,7 @@ function signInGoogle() {
       const credential = error.credential;
       alert(errorCode, errorMessage, email, credential)
     });
-}
+};
 
 function signInFacebook(){
   const provider = new firebase.auth.FacebookAuthProvider();
@@ -53,7 +53,6 @@ function signInFacebook(){
     if (response.additionalUserInfo.isNewUser) {
       window.location = `form-profile.html?id=${response.user.uid}`;
     } else { window.location = `timeline.html?id=${response.user.uid}` }
-
  
   }).catch(function(error) {
     var errorCode = error.code;
@@ -62,4 +61,4 @@ function signInFacebook(){
     var credential = error.credential;
     alert(errorCode, errorMessage, email, credential)
   });
-}
+};

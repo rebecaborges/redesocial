@@ -10,7 +10,7 @@
 
 ![Barbara](public/images/Barbara.png)
 
-![Maria](puclic/images/Maria.png)
+![Maria](public/images/Maria.png)
 
 #### Protótipo:
 
