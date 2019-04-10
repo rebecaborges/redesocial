@@ -10,7 +10,6 @@ $(document).ready(() => {
     }
     else if (document.querySelector("#filterPostsSelect").selectedIndex ===1) {
      getDatabasePosts(true)
-      //console.log("public")
     }
     else if (document.querySelector("#filterPostsSelect").selectedIndex ===2){
       getDatabasePosts(false)
@@ -33,17 +32,6 @@ $(document).ready(() => {
 	  text.height(text.prop('scrollHeight'));
   });
 
-
-
-
-  // if ($("#filterPostSelect").val() === "all") {
-  //   console.log("all")
-  // } else if ($("#filterPostSelect".val() === "public")){
-  //   console.log("public")
-  // }
-  // else if ($("#filterPostSelect".val() === "private")){
-  //   console.log("private")
-  // }
 })
 
 function getDatabasePosts(boolean) {
@@ -56,7 +44,6 @@ function getDatabasePosts(boolean) {
         const childData = childSnapshot.val().posts;
         const likes = childSnapshot.val().likes;
         const privacy = childSnapshot.val().public;
-        //const booleano = true && false
         showDatabasePosts(childKey, childData, likes, privacy, boolean)
         
         $(`#${childKey}`).on("click", () => {
@@ -142,7 +129,6 @@ function showDatabasePosts(childKey, childData, likes, privacy, boolean) {
     </section>`)
   }
 };
-
 
 function getPostFromTextarea() {
   return $("#textAreaPost").val();
