@@ -24,10 +24,11 @@ $(document).ready(() => {
 
 $("#filterPostsSelect").on("change", () => {
   if (document.querySelector("#filterPostsSelect").selectedIndex ===0){
-   console.log("all")
+   getDatabasePosts()
   }
   else if (document.querySelector("#filterPostsSelect").selectedIndex ===1) {
-    console.log("public")
+   getDatabasePosts()
+    //console.log("public")
   }
   else if (document.querySelector("#filterPostsSelect").selectedIndex ===2){
     console.log("private")
@@ -51,6 +52,7 @@ function getDatabasePosts() {
 
         const childData = childSnapshot.val().posts;
         const likes = childSnapshot.val().likes;
+        //const privacy = childSnapshot.val().public;
         showDatabasePosts(childKey, childData, likes)
         
         $(`#${childKey}`).on("click", () => {
@@ -99,6 +101,7 @@ function removePosts(key) {
 
 function showDatabasePosts(childKey, childData, likes) {
   const user = firebase.auth().currentUser
+  
   $("#postsSection").prepend(`
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -115,10 +118,6 @@ function showDatabasePosts(childKey, childData, likes) {
       <button class="btn btn-primary" data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       </footer>
     </section>`)
-
-
-
-
 };
 
 
