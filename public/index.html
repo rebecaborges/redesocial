@@ -6,9 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Rede Social</title>
-  <link rel="stylesheet" href="css/login.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/login.css">
   <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -16,40 +17,40 @@
 </head>
 
 <body>
-  <div class="container-fluid p-0">
-    <section class="row">
-      <img src="images/chama-as-mina-header.jpg" class="image-responsive">
-    </section>
-  </div>
- 
+  <header class="container-fluid d-flex justify-content-center p-0 header-logo">
+    <img src="images/chama-as-mina-header.jpg" class="image-responsive">
+  </header>
+
 
   <main class="container-fluid col-md-6">
-    <section class="form-signin">
-      <form class="form-wrap">
-        <div class="form-group">
-          <input type="email" class="form-control mt-4" id="signInEmail" aria-describedby="emailHelp"
-            placeholder="E-mail">
-          <input type="password" class="form-control mt-4" id="signInPassword" placeholder="Senha">
+    <section>
+      <article class="d-flex justify-content-center mt-4 style-font-title">Acesse sua conta</article>
+      <section class="form-signin d-flex justify-content-center">
+        <form class="form-wrap">
+          <div class="form-group">
+            <input type="email" class="form-control mt-2" id="signInEmail" aria-describedby="emailHelp"
+              placeholder="E-mail">
+            <input type="password" class="form-control mt-4" id="signInPassword" placeholder="Senha">
+            <div class="btn-signin">
+              <button type="submit" class="btn btn-block mt-4 btn-style" id="signInButton">Login</button>
+            </div>
+          </div>
+        </form>
+      </section>
 
-          <div class="form-group form-check">
-            <!-- <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
-            <!-- <label class="form-check-label" for="exampleCheck1">Check me out</label> -->
-          </div>
-          <div class="btn-signin">
-            <button type="submit" class="btn btn-primary btn-block" id="signInButton">Login</button>
-          </div>
-        </div>
-      </form>
+      <figure class="social-network">
+        <a href="#" class="icon-facebook social-circle" id="signInButtonFacebook" title="Facebook"><i
+            class="fa fa-facebook"></i></a>
+        <a href="#" class="icon-google social-circle" id="signInButtonGoogle" title="Google +"><i
+            class="fa fa-google-plus"></i></a>
+      </figure>
     </section>
-    <figure class="social-network">
-      <a href="#" class="icon-facebook social-circle" id="signInButtonFacebook" title="Facebook"><i
-          class="fa fa-facebook"></i></a>
-      <a href="#" class="icon-google social-circle" id="signInButtonGoogle" title="Google +"><i
-          class="fa fa-google-plus"></i></a>
-    </figure>
 
-    <section class="btn-signup">
-      <input class="btn btn-primary" type="button" value="CRIAR CONTA" id="signUpButton">
+    <section>
+      <article class="d-flex justify-content-center style-font-title">Não tem uma conta?</article>
+      <div class="btn-signup d-flex justify-content-center">
+        <input class="btn btn-style mt-2 mb-4" type="button" value="CRIAR CONTA" id="signUpButton">
+      </div>
     </section>
   </main>
 

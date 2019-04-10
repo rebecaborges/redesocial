@@ -1,38 +1,35 @@
-body{
+body {
   margin: 0;
+  background-color: #060a1c;
 }
 
 .header-logo{
-  display: flex;
-  justify-content: center;
+  background-color: #fce804;
 }
 
-.form-signin{
-  display: flex;
-  justify-content: center;
+.style-font-title {
+  font-family: "Roboto", sans-serif;
+  color: white;
 }
 
-.form-wrap{
+.form-signin {
+  width: 100%;
+}
+
+.form-wrap {
   width: 80%;
 }
 
-.btn-signin{
-  display: flex;
-  justify-content: center;
+.btn-style{
+  background-color: #fce804;
+  font-family: "Roboto", sans-serif;
+  color: #060a1c;
 }
 
 .social-network {
   display: flex;
   justify-content: center;
 	list-style: none;
-}
-
-.social-network .icon-facebook{
-	background-color:#3B5998;
-}
-
-.social-network .icon-google{
-	background-color:#BD3518;
 }
 
 .social-circle {
@@ -49,14 +46,19 @@ body{
   margin: 2px;
 }
 
-.btn-signup{
-  display: flex;
-  justify-content: center;
-  
+.social-network .icon-facebook {
+	background-color:#3B5998;
+}
+
+.social-network .icon-google {
+	background-color:#BD3518;
 }
 
 @media (max-width: 576px) { 
   .form-wrap {
-    width: 50%;
+    width: 80%;
+  }
+  .header-logo {
+    width: 100vw;
   }
 }
