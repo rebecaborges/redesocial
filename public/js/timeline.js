@@ -69,17 +69,17 @@ function createTemplates(childKey, childData, likes){
   $("#postsSection").prepend(`
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <section class="card border-success mb-3 show-post" style="max-width: 40rem;">
-      <header class="card-header bg-transparent border-success">${user.displayName}</header>
-      <article class="card-body text-success">
+    <section class="card border mb-3 show-post" style="max-width: 40rem;">
+      <header class="card-header bg-transparent border text-card">${user.displayName}</header>
+      <article class="card-body text-card">
       <p class="card-text" data-texto-id="${childKey}">${childData}</p>
       </article>
-      <footer class="card-footer bg-transparent border-success">
-      <button data-like="${childKey}" type="button" class="like btn btn-primary">
+      <footer class="card-footer bg-transparent border">
+      <button data-like="${childKey}" type="button" class="like btn btn-style">
         Curtir <span data-counter="${childKey}" class="counter badge badge-light">${likes}</span>
       </button>
-      <button class="btn btn-primary" data-edit="${childKey}">Editar</button>
-      <button class="btn btn-primary" data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
+      <button class="btn btn-style" data-edit="${childKey}">Editar</button>
+      <button class="btn btn-style" data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       </footer>
     </section>`)
 }
