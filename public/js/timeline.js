@@ -3,79 +3,53 @@ const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 
 $(document).ready(() => {
   getDatabasePosts();
+  disableButton();
+
 
   $("#sendPost").on("click", () => {
     getDatabasePosts();
     if ($("#select").val() === "public") {
       sendPostToDatabase(true);
-    } else if ($("#select").val() === "private") {
+    }else if ($("#select").val() === "private") {
       sendPostToDatabase(false);
     }
     $("#select").val($("#select").data("default-value"))
   });
 
   const text = $('#textAreaPost');
-  text.on('change drop keydown cut paste', function() {
+  text.on('change drop keydown cut paste', function () {
     text.height('auto');
-	  text.height(text.prop('scrollHeight'));
+    text.height(text.prop('scrollHeight'));
   });
-
 });
 
 function getDatabasePosts() {
   database.ref(`posts/${USER_ID}`).once('value')
     .then(function (snapshot) {
-      clear()
+      clear();
       snapshot.forEach(function (childSnapshot) {
         const childKey = childSnapshot.key;
-
         const childData = childSnapshot.val().posts;
         const likes = childSnapshot.val().likes;
+
         showDatabasePosts(childKey, childData, likes)
-        
+
         $(`#${childKey}`).on("click", () => {
           const deletePosts = confirm("Excluir post?")
           if (deletePosts === true) removePosts(childKey)
         }
         );
 
-        $(`button[data-edit="${childKey}"]`).on("click", ()=>{
+        $(`button[data-edit="${childKey}"]`).on("click", () => {
           editPost(childKey)
-        }) 
+        });
 
-        $(`button[data-like="${childKey}"]`).on("click", ()=>{
-         likePost(childKey)
+        $(`button[data-like="${childKey}"]`).on("click", () => {
+          likePost(childKey)
         });
       });
     });
 };
-
-function likePost(childKey){
-  let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
-  counter++
-  $(`span[data-counter="${childKey}"]`).text(counter)
-  database.ref(`posts/${USER_ID}/${childKey}`).update({
-    likes: counter
-  })
-}
-
-function editPost(childKey){
-  $(`p[data-texto-id="${childKey}"]`)
-  .attr("contentEditable", "true")
-  .focus()
-  .blur(() => {         
-    $(event.target).attr("contentEditable", "false")
-    database.ref(`posts/${USER_ID}/${childKey}`).update({
-      posts: $(event.target).text()
-    })
-  });      
-}
-
-function removePosts(key) {
-  database.ref(`posts/${USER_ID}/${key}`).remove();
-  getDatabasePosts();
-};
-
 
 function showDatabasePosts(childKey, childData, likes) {
   const user = firebase.auth().currentUser
@@ -95,12 +69,28 @@ function showDatabasePosts(childKey, childData, likes) {
       <button class="btn btn-primary" data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       </footer>
     </section>`)
-
-
-
-
 };
 
+function likePost(childKey) {
+  let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
+  counter++
+  $(`span[data-counter="${childKey}"]`).text(counter)
+  database.ref(`posts/${USER_ID}/${childKey}`).update({
+    likes: counter
+  })
+}
+
+function editPost(childKey) {
+  $(`p[data-texto-id="${childKey}"]`)
+    .attr("contentEditable", "true")
+    .focus()
+    .blur(() => {
+      $(event.target).attr("contentEditable", "false")
+      database.ref(`posts/${USER_ID}/${childKey}`).update({
+        posts: $(event.target).text()
+      })
+    });
+}
 
 function getPostFromTextarea() {
   return $("#textAreaPost").val();
@@ -111,8 +101,21 @@ function sendPostToDatabase(publicOrPrivate) {
     posts: getPostFromTextarea(),
     public: publicOrPrivate,
     likes: 0
-
   });
+}
+
+function removePosts(key) {
+  database.ref(`posts/${USER_ID}/${key}`).remove();
+  getDatabasePosts();
+};
+
+function disableButton() {
+  $("#sendPost").prop("disabled", true)
+  $('#textAreaPost').on("input change", function () {
+    if ((this).val != "") {
+      $("#sendPost").prop("disabled", !$(this).val().length)
+    }
+  })
 }
 
 function clear() {
