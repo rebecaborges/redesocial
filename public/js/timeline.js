@@ -22,6 +22,26 @@ $(document).ready(() => {
 
 });
 
+$("#filterPostsSelect").on("change", () => {
+  if (document.querySelector("#filterPostsSelect").selectedIndex ===0){
+   console.log("all")
+  }
+  else if (document.querySelector("#filterPostsSelect").selectedIndex ===1) {
+    console.log("public")
+  }
+  else if (document.querySelector("#filterPostsSelect").selectedIndex ===2){
+    console.log("private")
+  }
+  // if ($("#filterPostSelect").val() === "all") {
+  //   console.log("all")
+  // } else if ($("#filterPostSelect".val() === "public")){
+  //   console.log("public")
+  // }
+  // else if ($("#filterPostSelect".val() === "private")){
+  //   console.log("private")
+  // }
+})
+
 function getDatabasePosts() {
   database.ref(`posts/${USER_ID}`).once('value')
     .then(function (snapshot) {
