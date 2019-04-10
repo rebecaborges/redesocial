@@ -29,7 +29,6 @@ body {
 .social-network {
   display: flex;
   justify-content: center;
-	list-style: none;
 }
 
 .social-circle {
