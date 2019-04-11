@@ -22,8 +22,7 @@ $(document).ready(() => {
       sendPostToDatabase(true);
     } else if ($("#select").val() === "private") {
       sendPostToDatabase(false);
-    }
-    $("#select").val($("#select").data("default-value"))
+    };
   });
 
   const text = $('#textAreaPost');
