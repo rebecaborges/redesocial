@@ -18,7 +18,7 @@ $(document).ready(() => {
   $("#sendPost").on("click", () => {
     disableButton()
     getDatabasePosts();
-    if ($("#select").val() === "public") {
+    if ($("#select").val() === "selected") {
       sendPostToDatabase(true);
     } else if ($("#select").val() === "private") {
       sendPostToDatabase(false);
