@@ -13,11 +13,11 @@
   Criar perfil com dados como: profissão, nome completo, cidade e estado.
  
 ## Definição do produto
-  A "Chama as Mina" é uma rede social destinada a mulheres que buscam por profissionais e serviços online e também para as que procuram oferecer serviços pela internet. O objetivo da plataforma é facilitar e promover a valorização do trabalho feminino através da interatividade.  
-* Entrevistas com usuários: (https://docs.google.com/forms/d/1PZzVO7aPKnBEBkQJ2B-EiKZj8fU2p2xuGAwhOe9-ZE8/viewanalytics)
+  A "Chama as Mina" é uma rede social destinada tanto para mulheres que buscam por profissionais e serviços online, como também para as que desejam conseguir clientes e divulgar seu trabalho. O objetivo da plataforma é facilitar o contato profissional entre mulheres e promover a valorização do trabalho feminino.  
 
 ## Experiência de Usuário (UX Design)
-  Através das entrevistas realizadas foi possível entender as necessidades das usuárias. Elas são mulheres que utilizam redes sociais e costumam contratar serviços ou adquirir produtos pela internet. E também gostariam de apoiar o trabalho de outras mulheres. Além de se sentirem mais seguras em utilizarem serviços de outras mulheres.
+  Através das entrevistas realizadas foi possível entender as necessidades das usuárias. Elas são mulheres que utilizam redes sociais e costumam contratar serviços ou adquirir produtos pela internet, porém elas se sentiriam mais seguras se esses serviços fossem oferecidos por outras mulheres. Elas também demonstram interesse em apoiar o trabalho feminino.
+* Entrevistas com usuários: (https://docs.google.com/forms/d/1PZzVO7aPKnBEBkQJ2B-EiKZj8fU2p2xuGAwhOe9-ZE8/viewanalytics)
 
 #### Personas:
 
