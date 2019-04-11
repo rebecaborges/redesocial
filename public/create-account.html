@@ -8,10 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/create-account.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/create-account.css">
   <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-database.js"></script>
@@ -20,44 +21,44 @@
 
 <body>
   <header class="container-fluid d-flex justify-content-center p-0 header-logo">
-    <img src="images/chama-as-mina-header.jpg" class="image-responsive">
+    <img src="images/chama-as-mina-header.png" class="img">
   </header>
 
-  <div class="form-group col-md-6 d-flex flex-column align-items-center">
-    <label class="mt-4" for="formGroupExampleInput">Criar conta com</label>
-    <div>
-      <button type="button" class="btn btn-fb" id="signUpButtonFacebook"><i class="fab fa-facebook-f pr-1"></i>
-        Facebook</button>
-      <button type="button" class="btn btn-gplus" id="signUpButtonGoogle"><i class="fab fa-google-plus-g pr-1"></i>
-        Google</button>
-    </div>
-  </div>
+  <main class="container-fluid col-md-6 d-flex flex-column align-items-center">
+    <section class="form-group col-md-6 d-flex flex-column align-items-center">
+      <article class="mt-4 style-font-title">Criar conta com</article>
+      <figure class="social-network mt-2">
+        <a href="#" class="icon-facebook social-circle" id="signUpButtonFacebook" title="Facebook"><i
+            class="fa fa-facebook"></i></a>
+        <a href="#" class="icon-google social-circle" id="signUpButtonGoogle" title="Google +"><i
+            class="fa fa-google-plus"></i></a>
+      </figure>
+    </section>
 
-  <form>
-    <div class="form-group col-md-6">
-      <label for="formGroupExampleInput">Login</label>
-      <input type="email" class="form-control" id="signUpEmail" placeholder="E-mail">
-    </div>
+    <section class="form-signup d-flex justify-content-center">
+      <form class="form-wrap">
+        <div class="form-group">
+          <article class="style-font-title mb-2">Digite seu e-mail e senha para criar conta</article>
+          <input type="email" class="form-control m-0" id="signUpEmail" placeholder="E-mail">
+          <input type="password" class="form-control mt-2" id="signUpPassword" placeholder="Senha">
+          <div class="d-flex justify-content-center">
+            <input class="btn mt-3 btn-style" type="submit" value="CRIAR CONTA" id="signUpButton">
+          </div>
+        </div>
+      </form>
+    </section>
 
-    <div class="form-group col-md-6">
-      <input type="password" class="form-control" id="signUpPassword" placeholder="Senha">
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <input class="btn btn-primary mt-3" type="submit" value="CRIAR CONTA" id="signUpButton">
-    </div>
-  </form>
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-  <script src="js/create-account.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+    <script src="js/create-account.js"></script>
+  </main>
 </body>
 
 </html>

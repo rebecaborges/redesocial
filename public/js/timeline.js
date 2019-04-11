@@ -6,13 +6,11 @@ $(document).ready(() => {
   disableButton();
 
   $("#filterPostsSelect").on("change", () => {
-    if ($("#filterPostsSelect").val() === "all"){
-     getDatabasePosts(undefined)
-    }
-    else if ($("#filterPostsSelect").val() === "public") {
-     getDatabasePosts(true)
-    }
-    else if ($("#filterPostsSelect").val() === "private"){
+    if ($("#filterPostsSelect").val() === "all") {
+      getDatabasePosts(undefined)
+    } else if ($("#filterPostsSelect").val() === "public") {
+      getDatabasePosts(true)
+    } else if ($("#filterPostsSelect").val() === "private") {
       getDatabasePosts(false)
     }
   });
@@ -22,7 +20,7 @@ $(document).ready(() => {
     getDatabasePosts();
     if ($("#select").val() === "public") {
       sendPostToDatabase(true);
-    }else if ($("#select").val() === "private") {
+    } else if ($("#select").val() === "private") {
       sendPostToDatabase(false);
     }
     $("#select").val($("#select").data("default-value"))
@@ -44,14 +42,13 @@ function getDatabasePosts(boolean) {
         const childData = childSnapshot.val().posts;
         const likes = childSnapshot.val().likes;
         const privacy = childSnapshot.val().public;
-        
+
         showDatabasePosts(childKey, childData, likes, privacy, boolean)
-        
+
         $(`#${childKey}`).on("click", () => {
           const deletePosts = confirm("Excluir post?")
           if (deletePosts === true) removePosts(childKey)
-        }
-        );
+        });
 
         $(`button[data-edit="${childKey}"]`).on("click", () => {
           editPost(childKey)
@@ -64,27 +61,27 @@ function getDatabasePosts(boolean) {
     });
 };
 
-function createTemplates(childKey, childData, likes){
+function createTemplates(childKey, childData, likes) {
   const user = firebase.auth().currentUser
   $("#postsSection").prepend(`
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <section class="card border-success mb-3 show-post" style="max-width: 40rem;">
-      <header class="card-header bg-transparent border-success">${user.displayName}</header>
-      <article class="card-body text-success">
+    <section class="card border mb-3 show-post" style="max-width: 40rem;">
+      <header class="card-header bg-transparent border text-card">${user.displayName}</header>
+      <article class="card-body text-card">
       <p class="card-text" data-texto-id="${childKey}">${childData}</p>
       </article>
-      <footer class="card-footer bg-transparent border-success">
-      <button data-like="${childKey}" type="button" class="like btn btn-primary">
+      <footer class="card-footer bg-transparent border">
+      <button data-like="${childKey}" type="button" class="like btn btn-style">
         Curtir <span data-counter="${childKey}" class="counter badge badge-light">${likes}</span>
       </button>
-      <button class="btn btn-primary" data-edit="${childKey}">Editar</button>
-      <button class="btn btn-primary" data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
+      <button class="btn btn-style" data-edit="${childKey}">Editar</button>
+      <button class="btn btn-style" data-delete="${childKey}" id="${childKey}" class="delete">Deletar</button>
       </footer>
     </section>`)
 }
 
-function likePost(childKey){
+function likePost(childKey) {
   let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
   counter++
   $(`span[data-counter="${childKey}"]`).text(counter)
@@ -93,23 +90,23 @@ function likePost(childKey){
   });
 };
 
-function editPost(childKey){
+function editPost(childKey) {
   $(`p[data-texto-id="${childKey}"]`)
-  .attr("contentEditable", "true")
-  .focus()
-  .blur(() => {         
-    $(event.target).attr("contentEditable", "false")
-    database.ref(`posts/${USER_ID}/${childKey}`).update({
-      posts: $(event.target).text()
+    .attr("contentEditable", "true")
+    .focus()
+    .blur(() => {
+      $(event.target).attr("contentEditable", "false")
+      database.ref(`posts/${USER_ID}/${childKey}`).update({
+        posts: $(event.target).text()
+      });
     });
-  });
 };
 
 function showDatabasePosts(childKey, childData, likes, privacy, boolean) {
-  if(privacy === boolean){
+  if (privacy === boolean) {
     createTemplates(childKey, childData, likes)
   }
-  else if (boolean === undefined){
+  else if (boolean === undefined) {
     createTemplates(childKey, childData, likes)
   };
 };

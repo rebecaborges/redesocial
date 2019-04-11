@@ -18,7 +18,6 @@ function signInEmail(event) {
   event.preventDefault();
 
   firebase.auth().signInWithEmailAndPassword(email, password).then(function (response) {
-    ''
     window.location = `timeline.html?id=${response.user.uid}`;
   })
 
@@ -46,19 +45,19 @@ function signInGoogle() {
     });
 };
 
-function signInFacebook(){
+function signInFacebook() {
   const provider = new firebase.auth.FacebookAuthProvider();
   firebase.auth().signInWithPopup(provider)
-  .then(function(response) {
-    if (response.additionalUserInfo.isNewUser) {
-      window.location = `form-profile.html?id=${response.user.uid}`;
-    } else { window.location = `timeline.html?id=${response.user.uid}` }
- 
-  }).catch(function(error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    var email = error.email;
-    var credential = error.credential;
-    alert(errorCode, errorMessage, email, credential)
-  });
+    .then(function (response) {
+      if (response.additionalUserInfo.isNewUser) {
+        window.location = `form-profile.html?id=${response.user.uid}`;
+      } else { window.location = `timeline.html?id=${response.user.uid}` }
+
+    }).catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      var email = error.email;
+      var credential = error.credential;
+      alert(errorCode, errorMessage, email, credential)
+    });
 };

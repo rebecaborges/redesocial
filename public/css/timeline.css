@@ -1,8 +1,40 @@
-body{
-    margin: 0;
-    background-color: black;
+body {
+  margin: 0;
+  background-color: #060a1c;
+}
+
+.header-logo {
+  background-color:#fce804;
+}
+
+.btn-style {
+  background-color: #fcd704;
+  font-family: "Roboto", sans-serif;
+  color: #060a1c;
+}
+
+.btn-select {
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+  color: #060a1c;
+}
+
+.style-font-title {
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+.text-card {
+  font-family: "Roboto", sans-serif;
+  color: #060a1c;
+}
+
+@media (max-width: 576px) { 
+  .header-logo {
+    width: 100vw;
   }
 
-  .header-logo{
-    background-color: yellow;
+  .img {
+    height: 70px;
   }
+}

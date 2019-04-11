@@ -3,7 +3,7 @@ body {
   background-color: #060a1c;
 }
 
-.header-logo{
+.header-logo {
   background-color: #fce804;
 }
 
@@ -25,7 +25,7 @@ body {
   width: 80%;
 }
 
-.btn-style{
+.btn-style {
   background-color: #fce804;
   font-family: "Roboto", sans-serif;
   color: #060a1c;
@@ -34,7 +34,6 @@ body {
 .social-network {
   display: flex;
   justify-content: center;
-	list-style: none;
 }
 
 .social-circle {
@@ -66,6 +65,10 @@ body {
   .header-logo {
     width: 100vw;
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> create-account
   .img {
     height: 70px;
   }

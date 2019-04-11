@@ -1,3 +1,68 @@
-.btn btn-fb{
-  background-color: #4267B2;
+body {
+  margin: 0;
+  background-color: #060a1c;
+}
+
+.header-logo {
+  background-color: #fce804;
+}
+
+.style-font-title {
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+.form-signup {
+  width: 100%;
+}
+
+.form-wrap {
+  width: 80%;
+}
+
+.btn-style {
+    background-color: #fce804;
+    font-family: "Roboto", sans-serif;
+    color: #060a1c;
+}
+
+.social-network {
+  display: flex;
+  justify-content: center;
+}
+
+.social-circle {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  border-radius:50%;
+  width: 50px;
+  height: 50px;
+  font-size:20px;
+  margin: 2px;
+}
+
+.social-network .icon-facebook {
+	background-color:#3B5998;
+}
+
+.social-network .icon-google {
+	background-color:#BD3518;
+}
+
+@media (max-width: 576px) { 
+  .form-wrap {
+    width: 80%;
+  }
+
+  .header-logo {
+    width: 100vw;
+  }
+
+  .img {
+    height: 70px;
+  }
 }
