@@ -6,10 +6,10 @@
 * Planejamento: (https://trello.com/b/NKFJxdVN/rede-social)
 
 ## Funcionalidades
-  Funcionalidades Implementadas:
-  Sign Up: Criação de conta com e-mail, facebook e google
-  Sign In: Login com e-mail, facebook e google
-  Timeline: Post (Postar como público/privado, excluir, editar, filtrar por público/privado, e curtir)
+  Funcionalidades Implementadas: <br/>
+  Sign Up: Criação de conta com e-mail, facebook e google <br/>
+  Sign In: Login com e-mail, facebook e google <br/>
+  Timeline: Post (Postar como público/privado, excluir, editar, filtrar por público/privado, e curtir) <br/>
   Criar perfil com dados como: profissão, nome completo, cidade e estado.
  
 ## Definição do produto
