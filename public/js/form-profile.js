@@ -7,7 +7,7 @@ $(document).ready(function () {
     user.updateProfile({
       displayName: name
     })
-    firebase.database().ref(`profile/${user.uid}"`).update({
+    firebase.database().ref(`profile/"${user.uid}"`).update({
       surname: $('#surname').val(),
       profession: $('#profession').val(),
       city: $('#city').val(),
