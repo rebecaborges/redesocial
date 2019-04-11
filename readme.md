@@ -27,3 +27,4 @@
 
 #### Protótipo:
 * Baixa fidelidade: (https://marvelapp.com/b6ehdcb/screen/54727805)
+* Alta fidelidade: (https://marvelapp.com/b6ehdcb/screen/55644429)
