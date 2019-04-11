@@ -60,4 +60,8 @@ body {
   .header-logo {
     width: 100vw;
   }
+
+  .img {
+    height: 70px;
+  }
 }

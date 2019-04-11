@@ -57,4 +57,12 @@ body {
   .form-wrap {
     width: 80%;
   }
+
+  .header-logo {
+    width: 100vw;
+  }
+
+  .img {
+    height: 70px;
+  }
 }
