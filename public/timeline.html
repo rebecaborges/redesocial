@@ -28,30 +28,33 @@
     </section>
   </header>
 
-  <main class="container-fluid col-md-6 d-flex flex-column">
-    <section>
-      <article class="style-font-title mt-4"> Criar publicação</article>
-      <textarea class="mt-2" id="textAreaPost" placeholder="O que você está precisando?" cols="89" rows="5"></textarea>
-      <section class="d-flex align-items-center">
-        <select class="btn change-select btn-select mt-3" id="select" data-default-value="selected">
-          <option hidden value="selected">Selecione público/privado</option>
-          <option value="public">Público</option>
-          <option value="private">Privado</option>
-        </select>
+  <main class="container-fluid col-md-6 d-flex flex-column align-items-center form-posts">
+    <section class="form-mobile">
+      <section>
+        <article class="style-font-title mt-4"> Criar publicação</article>
+        <textarea class="form-control mt-2" id="textAreaPost" placeholder="O que você está precisando?"
+          rows="5"></textarea>
+        <section class="d-flex align-items-center">
+          <select class="btn change-select btn-select mt-3" id="select" data-default-value="selected">
+            <option hidden value="selected">Selecione público/privado</option>
+            <option value="public">Público</option>
+            <option value="private">Privado</option>
+          </select>
 
-        <button type="submit" class="btn btn-md btn-block btn-style mt-3 ml-3" id="sendPost">Compartihar</button>
+          <button type="submit" class="btn btn-md btn-block btn-style mt-3 ml-3" id="sendPost">Compartihar</button>
+        </section>
       </section>
-    </section>
 
-    <section>
-      <select class="btn change-select btn-select mt-4" id="filterPostsSelect">
-        <option value="all">Mostrar Todos os Posts</option>
-        <option value="public">Mostrar Posts Públicos</option>
-        <option value="private">Mostrar Posts Privados</option>
-      </select>
-    </section>
+      <section>
+        <select class="btn change-select btn-select mt-4" id="filterPostsSelect">
+          <option value="all">Mostrar Todos os Posts</option>
+          <option value="public">Mostrar Posts Públicos</option>
+          <option value="private">Mostrar Posts Privados</option>
+        </select>
+      </section>
 
-    <section class="show-post mt-3" id="postsSection"></section>
+      <section class="show-post mt-3" id="postsSection"></section>
+    </section>
   </main>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

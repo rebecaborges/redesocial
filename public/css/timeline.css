@@ -7,6 +7,14 @@ body {
   background-color:#fce804;
 }
 
+.form-posts {
+  width: 100%;
+}
+
+.form-mobile {
+  width: 80%;
+}
+
 .btn-style {
   background-color: #fcd704;
   font-family: "Roboto", sans-serif;
@@ -36,5 +44,9 @@ body {
 
   .img {
     height: 70px;
+  }
+
+  .form-mobile {
+    width: 90%;
   }
 }
