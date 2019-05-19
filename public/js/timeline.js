@@ -18,7 +18,7 @@ $(document).ready(() => {
   $("#sendPost").on("click", () => {
     disableButton()
     getDatabasePosts();
-    if ($("#select").val() === "selected") {
+    if ($("#select").val() === "public") {
       sendPostToDatabase(true);
     } else if ($("#select").val() === "private") {
       sendPostToDatabase(false);
@@ -140,3 +140,7 @@ function clear() {
   $("#postsSection").html("");
   $("#textAreaPost").val("");
 };
+
+
+
+
