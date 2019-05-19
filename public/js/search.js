@@ -3,7 +3,8 @@ const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 
 $(document).ready(() => {
   getDatabasePosts();
- 
+  disableButton();
+
   $("#filterPostsSelect").on("change", () => {
     if ($("#filterPostsSelect").val() === "all") {
       getDatabasePosts(undefined)
@@ -24,11 +25,17 @@ $(document).ready(() => {
     };
   });
 
+  const text = $('#textAreaPost');
+  text.on('change drop keydown cut paste', function () {
+    text.height('auto');
+    text.height(text.prop('scrollHeight'));
+  });
 });
 
 function getDatabasePosts(boolean) {
   database.ref(`posts/${USER_ID}`).once('value')
     .then(function (snapshot) {
+      clear();
       snapshot.forEach(function (childSnapshot) {
         const childKey = childSnapshot.key;
         const childData = childSnapshot.val().posts;
@@ -36,6 +43,19 @@ function getDatabasePosts(boolean) {
         const privacy = childSnapshot.val().public;
 
         showDatabasePosts(childKey, childData, likes, privacy, boolean)
+
+        $(`#${childKey}`).on("click", () => {
+          const deletePosts = confirm("Excluir post?")
+          if (deletePosts === true) removePosts(childKey)
+        });
+
+        $(`button[data-edit="${childKey}"]`).on("click", () => {
+          editPost(childKey)
+        });
+
+        $(`button[data-like="${childKey}"]`).on("click", () => {
+          likePost(childKey)
+        });
       });
     });
 };
@@ -60,6 +80,27 @@ function createTemplates(childKey, childData, likes) {
     </section>`)
 }
 
+function likePost(childKey) {
+  let counter = parseInt($(`span[data-counter="${childKey}"]`).text());
+  counter++
+  $(`span[data-counter="${childKey}"]`).text(counter)
+  database.ref(`posts/${USER_ID}/${childKey}`).update({
+    likes: counter
+  });
+};
+
+function editPost(childKey) {
+  $(`p[data-texto-id="${childKey}"]`)
+    .attr("contentEditable", "true")
+    .focus()
+    .blur(() => {
+      $(event.target).attr("contentEditable", "false")
+      database.ref(`posts/${USER_ID}/${childKey}`).update({
+        posts: $(event.target).text()
+      });
+    });
+};
+
 function showDatabasePosts(childKey, childData, likes, privacy, boolean) {
   if (privacy === boolean) {
     createTemplates(childKey, childData, likes)
@@ -68,3 +109,38 @@ function showDatabasePosts(childKey, childData, likes, privacy, boolean) {
     createTemplates(childKey, childData, likes)
   };
 };
+
+function getPostFromTextarea() {
+  return $("#textAreaPost").val();
+};
+
+function sendPostToDatabase(publicOrPrivate) {
+  firebase.database().ref(`posts/${USER_ID}/`).push({
+    posts: getPostFromTextarea(),
+    public: publicOrPrivate,
+    likes: 0
+  });
+};
+
+function removePosts(key) {
+  database.ref(`posts/${USER_ID}/${key}`).remove();
+  getDatabasePosts();
+};
+
+function disableButton() {
+  $("#sendPost").prop("disabled", true)
+  $('#textAreaPost').on("input", function () {
+    if ((this).val != "") {
+      $("#sendPost").prop("disabled", !$(this).val().length)
+    };
+  });
+};
+
+function clear() {
+  $("#postsSection").html("");
+  $("#textAreaPost").val("");
+};
+
+
+
+
