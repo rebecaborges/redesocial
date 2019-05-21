@@ -1,5 +1,5 @@
 const database = firebase.database();
-// const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
+const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 
 $(document).ready(() => {
   getDatabasePosts();
@@ -11,8 +11,9 @@ function getDatabasePosts() {
       snapshot.forEach(function (childSnapshot) {
         const childData = childSnapshot;
         const user = childData.val().userName
-      
+        
         showDatabasePosts(user)
+        
       });
     });
 };
@@ -35,3 +36,16 @@ function showDatabasePosts(childData) {
     createTemplates(childData)
 
 };
+
+function initFirebaseAuth() {
+  firebase.auth().onAuthStateChanged(authStateObserver);
+}
+
+document.querySelector("#signOut").addEventListener("click", signOut)
+function signOut() {
+  firebase.auth().signOut().then(function() {
+    window.location = `index.html`;
+  }, function(error) {
+    console.error('Sign Out Error', error);
+  });;
+}

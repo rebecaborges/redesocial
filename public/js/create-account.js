@@ -16,8 +16,7 @@ function signUp (event) {
 function createUser(email, password){
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(function (response) {
-      const userId = response.user.uid;
-      redirectToFormProfile(userId)
+      redirectToFormProfile(response)
     })
     .catch(function(error) {
     handleErrors(error)
@@ -38,8 +37,7 @@ function signUpFacebook () {
 function signInWithPopup(provider) {
   firebase.auth().signInWithPopup(provider).then(function(response) {
     const token = response.credential.accessToken;
-    const userId = response.user;
-    redirectToFormProfile(userId)
+    redirectToFormProfile(response)
 
   }).catch(function(error) {
     console.log(error )
@@ -58,6 +56,8 @@ function handleErrors(error){
   alert(errorMessage)
 }
 
-function redirectToFormProfile(userId){
-  window.location = "form-profile.html?id=" + userId;
+function redirectToFormProfile(response){
+  if (response.additionalUserInfo.isNewUser) {
+    window.location = `form-profile.html?id=${response.user.uid}`;
+  } else { window.location = `timeline.html?id=${response.user.uid}` }
 }
