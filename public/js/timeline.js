@@ -1,6 +1,14 @@
 const database = firebase.database();
 const USER_ID = window.location.search.match(/\?id=(.*)/)[1];
 
+$("#logout").click(function(){
+  firebase.auth().signOut().then(function() {
+    window.location = "index.html";
+  }).catch(function(error) {
+    alert(error)
+  });
+});
+
 $(document).ready(() => {
   getDatabasePosts();
   disableButton();
