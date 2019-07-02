@@ -7,6 +7,14 @@ body {
   background-color:#fce804;
 }
 
+.btn-logout-style {
+  background-color:#fce804;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 30px;
+  color: #060a1c;
+}
+
 .form-posts {
   width: 100%;
 }
@@ -43,7 +51,7 @@ body {
   }
 
   .img {
-    height: 70px;
+    height: 130px;
   }
 
   .form-mobile {
