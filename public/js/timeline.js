@@ -93,7 +93,7 @@ function likePost(childKey) {
   counter++
   $(`span[data-counter="${childKey}"]`).text(counter)
   database.ref(`posts/${USER_ID}/${childKey}`).update({
-    likes: counter
+    likes: counter++
   });
 };
 

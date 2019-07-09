@@ -5,9 +5,7 @@ $(document).ready(() => {
   })
 
   $("#signInButton").click(signInEmail)
-
   $("#signInButtonGoogle").click(signInGoogle)
-
   $("#signInButtonFacebook").click(signInFacebook)
 
 });
@@ -54,10 +52,10 @@ function signInFacebook() {
       } else { window.location = `timeline.html?id=${response.user.uid}` }
 
     }).catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      var email = error.email;
-      var credential = error.credential;
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.email;
+      const credential = error.credential;
       alert(errorCode, errorMessage, email, credential)
     });
 };

@@ -2,7 +2,7 @@ $(document).ready(function () {
   $('#saveProfileBtn').click(function (event) {
     event.preventDefault()
     const user = firebase.auth().currentUser
-    let name = $('#name').val()
+    const name = $('#name').val()
 
     user.updateProfile({
       displayName: name
