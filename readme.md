@@ -1,6 +1,10 @@
 ![logo chama as mina](./public/images/chama-as-mina-logo.jpg)
 
-# Introdução
+# Chama as Mina
+
+[![Build Status](https://img.shields.io/badge/link-web-yellow.svg)](https://redesocial-96ddc.firebaseapp.com/)
+
+## Introdução
   O projeto Rede Social foi desenvolvido para o bootcamp da Laboratória pelas alunas Esthéfanie Vila Maior, Iana Neri e Rebeca Borges. O objetivo é criar uma plataforma responsiva, que lê e grava dados através do firebase, utilizando JavaScript(ES6), HTML, CSS, jQuery e Bootstrap, além de seguir os princípios de UX e cultura ágil.
 
 #### Organização do projeto:
