@@ -46,3 +46,10 @@ Inicialmente, foi criado um protótipo de baixa fidelidade com pouco layout e de
 
 #### Testes HTML: 
 A rede social foi de fácil navegabilidade para as usuárias e cumpriu as funções propostas da primeira versão. A partir dos feedbacks, serão implementadas demais funções nas próximas versões: comentar e compartilhar posts, adicionar e deletar amigos, ver perfil ou timeline de usuárias, criar comunidades de ofertas de emprego, criar comunidades de ofertas de capacitação.
+
+## Simulação de Login:
+
+```sh
+email: maria@gmail.com
+senha: teste123
+```
