@@ -17,7 +17,7 @@
   **- Sign In:** login com e-mail, Facebook e Google <br>
   **- Timeline:** postar como público/privado, excluir, editar, filtrar por público/privado, e curtir. <br>
   **- Perfil:** criar perfil com dados como profissão, nome completo, cidade e estado, data de nascimento e @usuário.<br>
- 
+
 ## Definição do produto
   "Chama as Mina" é uma rede social destinada para mulheres que buscam por serviços e produtos, também para aquelas que desejam divulgar seu trabalho e conseguir novos clientes. O objetivo da plataforma é facilitar o contato entre as usuárias e promover a valorização e incentivo do trabalho feminino.
 
@@ -44,5 +44,5 @@ Inicialmente, foi criado um protótipo de baixa fidelidade com pouco layout e de
 * Baixa fidelidade: (https://marvelapp.com/b6ehdcb/screen/54727805)
 * Alta fidelidade: (https://marvelapp.com/b6ehdcb/screen/55644429)
 
-#### Testes HTML:
+#### Testes HTML: 
 A rede social foi de fácil navegabilidade para as usuárias e cumpriu as funções propostas da primeira versão. A partir dos feedbacks, serão implementadas demais funções nas próximas versões: comentar e compartilhar posts, adicionar e deletar amigos, ver perfil ou timeline de usuárias, criar comunidades de ofertas de emprego, criar comunidades de ofertas de capacitação.
